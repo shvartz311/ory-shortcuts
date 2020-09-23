@@ -10,8 +10,8 @@
 #    sslBackend = openssl
 [alias]
     cleanup = !git fetch origin --prune && git branch --merged origin/master | grep -v 'master$' | xargs git branch -d
-    info = !~/git-scripts/gitInfo.sh
-    start = !~/git-scripts/gitStart.sh
+    info = !~/.git-scripts/gitInfo.sh
+    start = !~/.git-scripts/gitStart.sh
     redo = !git commit -a --amend -C HEAD && git push --force-with-lease
     vs = !explorer.exe *.sln
     go = !cd /c/Users/jdnovick/Documents/git/

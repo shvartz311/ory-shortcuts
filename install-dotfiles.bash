@@ -1,9 +1,20 @@
 #!/bin/bash
 
 SCRIPTPATH=$(dirname $(readlink -f "$0") )
-echo "Running install script from $SCRIPTPATH"
 
-for FILE in .kube .nuget .oh-my-zsh-custom git-scripts .gitconfig .npmrc .tmux.conf .yarnrc .zshrc; do
+FILES=(
+  .kube
+  .nuget
+  .oh-my-zsh-custom
+  .git-scripts
+  .gitconfig
+  .npmrc
+  .tmux.conf
+  .yarnrc
+  .zshrc
+)
+
+for FILE in ${FILES[@]}; do
   if [[ ! ( -L "$HOME/$FILE" && $SCRIPTPATH/$FILE ==  $(readlink -f "$HOME/$FILE") ) ]]; then
     if [[ ( -f "$HOME/$FILE" || -d "$HOME/$FILE" ) ]]; then
       BACKUP=$HOME/$FILE.$(date +"%Y_%m_%d_%I_%M_%p").bak
@@ -20,7 +31,7 @@ done
 # chmod -R 777 $HOME/.kube
 # chmod -R 777 $HOME/.nuget
 # chmod -R 666 $HOME/.nuget/NuGet/NuGet.Config
-chmod 700 -R $HOME/git-scripts
+chmod 700 -R $HOME/.git-scripts
 # chmod -R 666 $HOME/.gitconfig
 chmod 600 $HOME/.npmrc
 # chmod -R 666 $HOME/.tmux.conf
