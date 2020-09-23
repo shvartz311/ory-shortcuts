@@ -27,6 +27,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 sudo sh -c 'echo "jdnovick ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
 sudo mkdir /c
 sudo mount --bind /mnt/c /c
+# I also like mounting the U drive
+sudo mkdir /mnt/u
 
 # nvm (npm, Node.js, etc.) - https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2#install-nvm-nodejs-and-npm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
@@ -44,6 +46,12 @@ sudo apt-get install -y yarn
 
 # azure-cli - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+sudo touch /etc/wsl.conf
+sudo bash -c 'cat > /etc/wsl.conf <<_EOF
+[automount]
+options = "metadata,umask=22,fmask=11"
+_EOF'
 
 chsh -s /bin/zsh
 exec zsh -l

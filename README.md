@@ -50,10 +50,32 @@
   ```
 
 - Install desired software
-  - This will prompt you for your password up to two times and approve switching default shell to zsh
+  - This will prompt you for your password up to two times and switch default shell to zsh
+  - This is not safe to re-run. Manually re-run pieces for updates, but not the whole thing.
 
 ```bash
 bash ./install-software.bash
+```
+
+## Migrating ssh keys
+
+Copy ssh keys to/from `U:\.ssh` drive. First you must mount the drive either permanantly or temporarilly.
+Before mounting, we must create a location to mount to with `sudo mkdir /mnt/u`
+
+``` bash
+# Save keys to U drive
+cp $HOME/.ssh/* /mnt/u/.ssh
+# If copy fails because the file is not writable, run these
+sudo chmod 600 /mnt/u/.ssh/*
+sudo chmod 644 /mnt/u/.ssh/*.pub
+sudo chmod 644 /mnt/u/.ssh/known_hosts
+
+# Load keys from U drive
+cp /mnt/u/.ssh/* $HOME/.ssh
+sudo chmod 600 ~/.ssh/*
+# These two are optional
+sudo chmod 644 ~/.ssh/*.pub
+sudo chmod 644 ~/.ssh/known_hosts
 ```
 
 ## Testing script with fresh WSL Distro

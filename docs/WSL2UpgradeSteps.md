@@ -70,30 +70,4 @@ sudo cp IEIRadius.crt /usr/local/share/ca-certificates/
 sudo cp GNVSUBCA1.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 
-* Run this in the old distro to copy ssh key to Windows where I used to store ssh keys with git bash
-
-``` zsh
-cp ~/.ssh/id_ed25519 /c/Users/jdnovick/.ssh/id_ed25519
-cp ~/.ssh/id_ed25519.pub /c/Users/jdnovick/.ssh/id_ed25519.pub
-# Intentionally choosing not to copy known_hosts since I want to rebuild that file
-```
-
-* Run this in new distro
-
-``` zsh
-mkdir -m700 ~/.ssh
-
-# Copy old Git Bash keys
-cp /c/Users/jdnovick/.ssh/id_rsa ~/.ssh/id_rsa
-cp /c/Users/jdnovick/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub
-
-# Copy old distro keys
-cp /c/Users/jdnovick/.ssh/id_ed25519.pub ~/.ssh/id_ed25519.pub
-cp /c/Users/jdnovick/.ssh/id_ed25519 ~/.ssh/id_ed25519
-
-# Fix permissions on Files
-chmod 600 ~/.ssh/id_ed25519
-chmod 644 ~/.ssh/id_ed25519.pub
-chmod 600 ~/.ssh/id_rsa
-chmod 644 ~/.ssh/id_rsa.pub
 ```
