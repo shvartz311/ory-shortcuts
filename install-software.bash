@@ -20,7 +20,7 @@ sudo apt-get install -y dotnet-sdk-3.1
 
 # oh-my-zsh - https://ohmyz.sh/
 sudo apt-get install -y zsh
-KEEP_ZSHRC=yes RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 # Enter password for changing default shell
 
 # I like mounting at /c instead of /mnt/c and this is part of that setup
@@ -44,3 +44,6 @@ sudo apt-get install -y yarn
 
 # azure-cli - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+chsh -s /bin/zsh
+exec zsh -l
