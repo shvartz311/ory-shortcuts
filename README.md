@@ -52,3 +52,33 @@
 ``` bash
 bash ./install-software.bash
 ```
+
+## Testing script with fresh WSL Distro
+
+1. Download [Ubuntu 20.04 WSL Distro](https://aka.ms/wslubuntu2004).
+
+1. Run these powershell commands (Renaming file may be necessary in the future)
+
+``` powershell
+& 'C:\Program Files\7-Zip\7z.exe' x "C:\Users\jdnovick\Downloads\Ubuntu_2004.2020.424.0_x64.appx" "-oC:\Users\jdnovick\Downloads\Ubuntu_2004.2020.424.0_x64" -y
+
+New-Item -Path C:\Users\jdnovick\AppData\Local\Packages\Throwaway_WSL_Ubuntu -ItemType Directory
+
+wsl.exe --import ubuntu-throwaway-2004 C:\Users\jdnovick\AppData\Local\Packages\Throwaway_WSL_Ubuntu C:\Users\jdnovick\Downloads\Ubuntu_2004.2020.424.0_x64\install.tar.gz --version 2
+```
+
+1. Run in new distro
+
+``` bash
+adduser jdnovick
+adduser jdnovick sudo
+
+tee /etc/wsl.conf <<_EOF
+[user]
+default=jdnovick
+_EOF
+```
+
+1. Restart WSL: `wsl.exe --shutdown`
+1. Re-open new distro and test scripts
+1. Delete throw away distro: `wsl --unregister ubuntu-throwaway-2004`
