@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 SCRIPTPATH=$(dirname $(readlink -f "$0") )
 echo "Running install script from $SCRIPTPATH"
