@@ -24,7 +24,9 @@ KEEP_ZSHRC=yes RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmy
 # Enter password for changing default shell
 
 # I like mounting at /c instead of /mnt/c and this is part of that setup
+sudo sh -c 'echo "jdnovick ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
 sudo mkdir /c
+sudo mount --bind /mnt/c /c
 
 # nvm (npm, Node.js, etc.) - https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2#install-nvm-nodejs-and-npm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
