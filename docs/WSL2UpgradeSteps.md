@@ -54,60 +54,12 @@ Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "Cisco AnyConnect"
   * The version in Software Center is too old to have the WSL2 support that I was looking for
 * Configure docker to use WSL2 backend and support the newly set up distro
 * Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.
-* I still have my WSL1 distro so I checked the box for "Expose daemon on tcp://localhost:2375 without TLS" since that was needed for WSL1.
+* I still have my WSL1 distro so I checked the box for "Expose daemon on tcp://localhost:2375 without TLS" since that was needed for WSL1. Don't check that box if you aren't needing WSL1 support.
 
-* Run the following in new distro
+* Manual steps for adding software and dotfiles have been removed.
+  Look in git history for them or use the script in the [README](../README.md).
+  * Now is the time to go run those scripts then continue following instructions below.
 
-``` bash
-# git setup
-# https://confluence.gainesville.infiniteenergy.com/display/DT/Gitlab
-# https://stackoverflow.com/questions/45925964/how-to-use-git-credential-store-on-wsl-ubuntu-on-windows
-git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe"
-
-# kubectl setup
-sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
-sudo apt-get install -y kubectl
-mkdir ~/.kube
-vim ~/.kube/config
-# Copy content from https://gitlab.infiniteenergy.dev/IEI/docker-library/-/blob/master/k8s.config.yml then close vim
-# Remove version of kubectl installed by docker (I have had to do this a couple more times. I will look for more permanent solution later.)
-sudo rm /usr/local/bin/kubectl
-
-# dotnet - https://docs.microsoft.com/en-us/dotnet/core/install/linux#ubuntu
-wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-sudo dpkg -i packages-microsoft-prod.deb
-sudo apt-get update
-# sudo apt-get install -y apt-transport-https && \
-# sudo apt-get update
-sudo apt-get install -y dotnet-sdk-3.1
-
-# oh-my-zsh - https://ohmyz.sh/
-sudo apt-get install -y zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-# Select yes and enter password for changing default shell
-
-# I like mounting at /c instead of /mnt/c and this is part of that setup
-sudo mkdir /c 
-
-code ~/.oh-my-zsh
-code ~/.zshrc
-
-```
-
-* In `~/.zshrc`, set `ZSH_THEME="joshua"` and add `kubectl`, `dotnet`, `nvm`, `npm`, and `yarn` plugin to list of plugins
-  * I added the last 3 plugins as I did the installations below. I am not sure what happens if they are installed before installing the tooling
-* Add `joshua.zsh-theme` to custom/themes. This theme is based off of `agnoster` but
-  adds more git info, kubecontext, execution time, and time. If anyone wants my theme,
-  I'll gladly send it to you, but I suggest building the theme based on your needs.
-* Update `/etc/sudoers` because my theme includes mount `/mnt/c` at `/c`
-  * I originally did that for docker in WSL1 so it isn't necessary here, but nonetheless I like it so I am gonna keep it.
-  * Set `vim` or `vi` as default editor for `visudo` using `sudo update-alternatives --config editor`
-  * Call `sudo visudo /etc/sudoers` and add `jdnovick ALL=(root) NOPASSWD: /bin/mount` to the end of the file
-  * This will be unnecessary if I switch to using [wsl.conf](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-per-distro-launch-settings-with-wslconf)
-    but I am not yet familiar with how to use it so I'll figure that out later.
 * Run this stuff in new distro:
 
 ``` zsh
@@ -117,26 +69,6 @@ code ~/.zshrc
 sudo cp IEIRadius.crt /usr/local/share/ca-certificates/
 sudo cp GNVSUBCA1.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
-
-# nvm (npm, Node.js, etc.) - https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2#install-nvm-nodejs-and-npm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-export NVM_DIR=/home/jdnovick/.nvm # This is unnecessary once you add nvm zsh plugin mentioned above. You can just reload after adding plugin instead of doing this line
-nvm install node
-nvm install --lts
-npm config set cafile /etc/ssl/certs/ca-certificates.crt -g
-npm config set registry https://nexus.gainesville.infiniteenergy.com/repository/npm-unstable/
-
-# yarn - https://classic.yarnpkg.com/en/docs/install/#debian-stable
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install -y yarn
-yarn config set cafile /etc/ssl/certs/ca-certificates.crt
-yarn config set registry https://nexus.gainesville.infiniteenergy.com/repository/npm-unstable/
-
-# azure-cli - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-```
 
 * Run this in the old distro to copy ssh key to Windows where I used to store ssh keys with git bash
 
