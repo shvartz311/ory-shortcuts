@@ -20,7 +20,7 @@ done
 # chmod -R 777 $HOME/.kube
 # chmod -R 777 $HOME/.nuget
 # chmod -R 666 $HOME/.nuget/NuGet/NuGet.Config
-chmod 700 -R git-scripts
+chmod 700 -R $HOME/git-scripts
 # chmod -R 666 $HOME/.gitconfig
 chmod 600 $HOME/.npmrc
 # chmod -R 666 $HOME/.tmux.conf
