@@ -27,9 +27,11 @@
   - Setup the [git credential manager](https://github.com/microsoft/Git-Credential-Manager-for-Windows/releases) before cloning
 
     ``` bash
-    git config --global credential.helper "/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe"
-    git clone https://gitlab.infiniteenergy.dev/Jdnovick/dotfiles.git
-    git config --global --unset credential.helper && grep -q '[^[:space:]]' < ~/.gitconfig || rm ~/.gitconfig
+    git clone -c credential.helper="/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe" https://gitlab.infiniteenergy.dev/Jdnovick/dotfiles.git
+
+    # Once the script is run, this will come from global ~/.gitconfig
+    # so we are unsetting it here. This is optional to do.
+    cd dotfiles && git config --unset credential.helper
     ```
 
 - Install dotfiles
