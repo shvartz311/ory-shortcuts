@@ -1,5 +1,8 @@
 # dotfiles
 
+If anyone wants to use this repo that is not me, please fork it and change `jdnovick` everywhere to your own username.
+Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place
+
 ## Main setup plan
 
 1. Install WSL by running this in powershell as admin. It comes from [Official MS Docs](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
