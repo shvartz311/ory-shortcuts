@@ -9,11 +9,11 @@
 * Set default WSL distro to my new one: `wsl.exe --set-default Ubuntu-20.04`
 * Install latest Windows Terminal: [1.2.2234.0](https://github.com/microsoft/terminal/releases/tag/v1.2.2234.0)
   (There are newer versions now)
+* Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"` since we are going to setup oh-my-zsh later
 * Configure Windows Terminal
   * Setup font for old and new distro (Downloaded from [here](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code))
     * Windows Terminal 1.3 ships with Cascadia Code v2008.25 so this step would no longer be necessary
   * Add git bash to Windows Terminal with a unique [GUID](https://www.guidgenerator.com/)
-* Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"` since we are going to setup oh-my-zsh later
 
     ``` json
     {
@@ -59,15 +59,3 @@ Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "Cisco AnyConnect"
 * Manual steps for adding software and dotfiles have been removed.
   Look in git history for them or use the script in the [README](../README.md).
   * Now is the time to go run those scripts then continue following instructions below.
-
-* Run this stuff in new distro:
-
-``` zsh
-
-# Download certs if you do not already have them or copy from docker-library
-# A combined certificate is here, but I copied from docker-library: https://confluence.gainesville.infiniteenergy.com/pages/viewpage.action?pageId=109805577
-sudo cp IEIRadius.crt /usr/local/share/ca-certificates/
-sudo cp GNVSUBCA1.crt /usr/local/share/ca-certificates/
-sudo update-ca-certificates
-
-```

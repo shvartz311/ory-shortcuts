@@ -53,5 +53,8 @@ sudo bash -c 'cat > /etc/wsl.conf <<_EOF
 options = "metadata,umask=22,fmask=11"
 _EOF'
 
+sudo cp certificates/IEIRadius.crt /usr/local/share/ca-certificates/
+sudo cp certificates/GNVSUBCA1.crt /usr/local/share/ca-certificates/
+
 chsh -s /bin/zsh
 exec zsh -l
