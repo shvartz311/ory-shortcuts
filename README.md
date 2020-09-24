@@ -1,7 +1,8 @@
 # dotfiles
 
 If anyone wants to use this repo that is not me, please fork it and change `jdnovick` everywhere to your own username.
-Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place
+Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place.
+**NEVER** Commit back sesitive information within any file such as `.ssh` or the `access-token` in `.kube/config`.
 
 ## Main setup plan
 
@@ -14,7 +15,7 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
 
 1. Run powershell file `./install.ps1` which has automated nearly every step,
    but is untested. If anything fails, fix by hand or use [below instructions](#Set-up-a-little-more-by-hand)
-1. Copy windows Terminal settings from [here](./WindowsTerminalSettings.jsonc).
+1. Copy windows Terminal settings that you desire from [here](./WindowsTerminalSettings.jsonc).
 1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
    It is now included in Windows Terminal though so you won't need it there.
    - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
@@ -34,6 +35,8 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
 
 ## Set up a little more by hand
 
+If the powershell script above fails, these steps are the manual equivalent
+
 - To get best Windows Terminal experience, I first install these steps by hand:
 
   1. Run step 1 from above
@@ -41,9 +44,6 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
   1. Download and install kernel update <https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi>
   1. Follow Instructions I wrote when I did upgrade to WSL2 from WSL1: [WSL2 Upgrade Steps](./docs/WSL2UpgradeSteps.md)
      - I have removed any steps that are now automated to set up the dotfiles or install software (Except .ssh folder)
-     - TODO: Automate and streamline more
-       - Certificates
-       - ssh keys since those can't be stored securely in a git repo
 
 - Clone git repo
 
