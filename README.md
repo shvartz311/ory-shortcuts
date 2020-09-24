@@ -1,13 +1,39 @@
 # dotfiles
 
+## Main setup plan
+
+1. Install WSL by running this in powershell as admin. It comes from [Official MS Docs](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+   ```powershell
+   dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+   dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+   ```
+
+1. Run powershell file `./install.ps1` which has automated nearly every step,
+   but is untested. If anything fails, fix by hand or use [below instructions](#Set-up-a-little-more-by-hand)
+1. Copy windows Terminal settings from [here](./WindowsTerminalSettings.jsonc).
+1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
+   It is now included in Windows Terminal though so you won't need it there.
+   - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
+1. Run the following Powershell as admin when connected to VPN and WSL is open:
+
+   - Automate the second line using the technique here: <https://github.com/microsoft/WSL/issues/4277#issuecomment-639460712>
+
+     ```powershell
+     Get-NetIPInterface -InterfaceAlias "vEthernet (WSL)" | Set-NetIPInterface -InterfaceMetric 1
+     Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "Cisco AnyConnect"} | Set-NetIPInterface -InterfaceMetric 6000
+     ```
+
+1. Install latest docker: <https://hub.docker.com/editions/community/docker-ce-desktop-windows/>
+   - The version in Software Center is too old to have the WSL2 support that I was looking for
+1. Configure docker to use WSL2 backend and support the newly set up distro
+1. Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.
+
+## Set up a little more by hand
+
 - To get best Windows Terminal experience, I first install these steps by hand:
 
-  1. Install WSL by running this in powershell as admin. [Official MS Docs](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
-
-      ```powershell
-      dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-      dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-      ```
+  1. Run step 1 from above
 
   1. Download and install kernel update <https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi>
   1. Follow Instructions I wrote when I did upgrade to WSL2 from WSL1: [WSL2 Upgrade Steps](./docs/WSL2UpgradeSteps.md)
@@ -62,7 +88,7 @@ bash ./install-software.bash
 Copy ssh keys to/from `U:\.ssh` drive. First you must mount the drive either permanantly or temporarilly.
 Before mounting, we must create a location to mount to with `sudo mkdir /mnt/u`
 
-``` bash
+```bash
 # Save keys to U drive
 cp $HOME/.ssh/* /mnt/u/.ssh
 # If copy fails because the file is not writable, run these
@@ -80,30 +106,6 @@ sudo chmod 644 ~/.ssh/known_hosts
 
 ## Testing script with fresh WSL Distro
 
-1. Download [Ubuntu 20.04 WSL Distro](https://aka.ms/wslubuntu2004) if it is not already downloaded.
-
-1. Run these powershell commands (Renaming file may be necessary in the future)
-
-    ```powershell
-    & 'C:\Program Files\7-Zip\7z.exe' x "C:\Users\jdnovick\Downloads\Ubuntu_2004.2020.424.0_x64.appx" "-oC:\Users\jdnovick\Downloads\Ubuntu_2004.2020.424.0_x64" -y
-
-    New-Item -Path C:\Users\jdnovick\AppData\Local\Packages\Throwaway_WSL_Ubuntu -ItemType Directory
-
-    wsl.exe --import ubuntu-throwaway-2004 C:\Users\jdnovick\AppData\Local\Packages\Throwaway_WSL_Ubuntu C:\Users\jdnovick\Downloads\Ubuntu_2004.2020.424.0_x64\install.tar.gz --version 2
-    ```
-
-1. Run in new distro
-
-    ```bash
-    adduser jdnovick
-    adduser jdnovick sudo
-
-    tee /etc/wsl.conf <<_EOF
-    [user]
-    default=jdnovick
-    _EOF
-    ```
-
-1. Restart WSL: `wsl.exe --shutdown`
-1. Re-open new distro and test scripts
-1. Delete throw away distro: `wsl --unregister ubuntu-throwaway-2004`
+1. Run `.\create-throwaway-distro.ps1`
+1. Verify everything looks good.
+1. Delete throw away distro: `wsl.exe --unregister ubuntu-throwaway-2004`
