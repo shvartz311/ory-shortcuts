@@ -28,7 +28,7 @@ for FILE in ${FILES[@]}; do
     fi
 done
 
-# chmod -R 777 $HOME/.kube
+chmod -R 600 $HOME/.kube/config
 # chmod -R 777 $HOME/.nuget
 # chmod -R 666 $HOME/.nuget/NuGet/NuGet.Config
 chmod 700 -R $HOME/.git-scripts

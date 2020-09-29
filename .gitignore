@@ -1,2 +1,3 @@
-.kube/cache/*
+.kube/cache
+.kube/http-cache
 .vscode/settings.json
