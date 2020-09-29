@@ -13,23 +13,24 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
    ```
 
-1. Run powershell file `./install.ps1` which has automated nearly every step,
+1. Run powershell file `./powershell/install-prerequisites.ps1` which has automated installing software needed,
    but is untested. If anything fails, fix by hand or use [below instructions](#Set-up-a-little-more-by-hand)
+   - ITSO South (Service Desk) is gonna be adding these apps to Software Center/Windows Store. Install from there instead of using this script once that is done.
+     - Windows Terminal
+     - Ubuntu 20.04
+     - WSL2 Kernel Patch
 1. Copy windows Terminal settings that you desire from [here](./WindowsTerminalSettings.jsonc).
 1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
    It is now included in Windows Terminal though so you won't need it there.
    - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
-1. Run the following Powershell as admin when connected to VPN and WSL is open:
-
-   - Automate the second line using the technique here: <https://github.com/microsoft/WSL/issues/4277#issuecomment-639460712>
-
-     ```powershell
-     Get-NetIPInterface -InterfaceAlias "vEthernet (WSL)" | Set-NetIPInterface -InterfaceMetric 1
-     Get-NetAdapter | Where-Object {$_.InterfaceDescription -Match "Cisco AnyConnect"} | Set-NetIPInterface -InterfaceMetric 6000
-     ```
-
+1. Import `CiscoVPN-Network-Update.xml` as a scheduled task and copy `Cisco.ps1` to `C:\Users\jdnovick\Cisco.ps1`.
+   [Relevant GitHub issue](https://github.com/microsoft/WSL/issues/4277#issuecomment-639460712)
+1. Login to the new distro once to configure username and password
+1. Run powershell file: `./powershell/install-dotfiles-and-software.ps1`
+   - When prompted, enter password. This will happen multiple times.
 1. Install latest docker: <https://hub.docker.com/editions/community/docker-ce-desktop-windows/>
-   - The version in Software Center is too old to have the WSL2 support that I was looking for
+   - The version in Software Center was too old to have the WSL2 support that I was looking for as of when I wrote this,
+     but ITSO South is currently updating it.
 1. Configure docker to use WSL2 backend and support the newly set up distro
 1. Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.
 
@@ -109,6 +110,6 @@ sudo chmod 644 ~/.ssh/known_hosts
 
 ## Testing script with fresh WSL Distro
 
-1. Run `.\create-throwaway-distro.ps1`
+1. Run `.\powershell\create-throwaway-distro.ps1`
 1. Verify everything looks good.
 1. Delete throw away distro: `wsl.exe --unregister ubuntu-throwaway-2004`

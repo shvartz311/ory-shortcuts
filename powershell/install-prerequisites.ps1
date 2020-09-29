@@ -16,16 +16,5 @@ if (!(Test-Path $app)) {
 }
 
 Install-Package $kernelUpdate
-wsl --set-default-version 2
 Add-AppPackage -Path $terminal
 Add-AppxPackage -Path $app
-
-wsl --set-default Ubuntu-20.04
-
-wsl -d Ubuntu-20.04 bash -c "adduser --gecos '' --ingroup sudo $user && \
-su $user && \
-cd ~ && \
-git clone -c credential.helper='/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe' https://gitlab.infiniteenergy.dev/Jdnovick/dotfiles.git && \
-cd dotfiles && git config --unset credential.helper && \
-bash install-dotfiles.bash && \
-bash install-software.bash"
