@@ -1,4 +1,4 @@
-alias go='cd /c/Users/jdnovick/Documents/git/'
+alias go='cd /c/Users/Joshua/Documents/git/'
 alias vs="explorer.exe *.sln"
 
 # Docker automatically installs an older version at /usr/local/bin/kubectl

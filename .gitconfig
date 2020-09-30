@@ -1,10 +1,10 @@
 [core]
     editor = vim
-    excludesfile = /home/jdnovick/.gitignore
+    excludesfile = /home/joshua/.gitignore
     autocrlf = input
 [user]
     name = Joshua Novick
-    email = JDNovick@infiniteenergy.com
+    email = novickjd@gmail.com
 [http]
 #    sslCAinfo = /c/Users/jdnovick/AppData/Roaming/iei/certs/IEIBundle.crt
 #    sslBackend = openssl
@@ -14,7 +14,7 @@
     start = !~/.git-scripts/gitStart.sh
     redo = !git commit -a --amend -C HEAD && git push --force-with-lease
     vs = !explorer.exe *.sln
-    go = !cd /c/Users/jdnovick/Documents/git/
+    go = !cd /c/Users/Joshua/Documents/git/
     compare = "!f() { \
         OTHER=${2:-$(git symbolic-ref -q HEAD --short)}; \
         git rev-list \"$1\"...\"$2\" --count --left-right | awk -v A=\"$1\" -v B=\"$OTHER\" '{print A,\"is\",\"\\033[32m\"$1\"\\033[39m\",\"commits ahead of\",B,\"and\",\"\\033[31m\"$2\"\\033[39m\",\"behind\"}'; \
