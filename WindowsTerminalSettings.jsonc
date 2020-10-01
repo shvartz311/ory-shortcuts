@@ -73,6 +73,20 @@
               "hidden": false,
               "name": "Azure Cloud Shell",
               "source": "Windows.Terminal.Azure"
+          },
+          {
+              "guid": "{1190852f-d156-4583-853f-1f57e20eb4b5}",
+              "hidden": false,
+              "name": "Biodome-Core-1",
+              "commandline": "ssh jdnovick@biodome-core-1",
+              "icon": "C:\\Users\\jdnovick\\Documents\\IE.jpg"
+          },
+          {
+              "guid": "{d77aec51-7ad9-4ec5-995e-ac630f732a5b}",
+              "hidden": false,
+              "name": "Ansible 2.9",
+              "commandline": "wsl -d Ubuntu-20.04 sh -c 'az account show > /dev/null 2> /dev/null || az login && az acr login -n acrieieus2dev && docker pull acrieieus2dev.azurecr.io/library/ansible:2.9 > /dev/null 2> /dev/null && docker run --rm -it -v /mnt/c:/c -w /c/Users/jdnovick/Documents/git acrieieus2dev.azurecr.io/library/ansible:2.9'",
+              "icon": "C:\\Users\\jdnovick\\Documents\\ansiblelogo.png"
           }
       ]
   },
