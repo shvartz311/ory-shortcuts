@@ -24,7 +24,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # Enter password for changing default shell
 
 # I like mounting at /c instead of /mnt/c and this is part of that setup
-sudo sh -c 'echo "jdnovick ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
+sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
 sudo mkdir /c
 sudo mount --bind /mnt/c /c
 # I also like mounting the U drive
@@ -32,7 +32,7 @@ sudo mkdir /mnt/u
 
 # nvm (npm, Node.js, etc.) - https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2#install-nvm-nodejs-and-npm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-export NVM_DIR=/home/jdnovick/.nvm
+export NVM_DIR=/home/$USER/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 nvm install node
