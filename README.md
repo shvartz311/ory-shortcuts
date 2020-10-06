@@ -14,11 +14,11 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    ```
 
 1. In a non-admin powershell, run this command: `wsl --set-default-version 2`
-1. Install these apps to from Company Portal if they aren't already installed.
+1. Install these apps to from Company Portal or Software Center if they aren't already installed.
    - Windows Terminal
    - Ubuntu
      - If you prefer a different distro, either download from
-     [here](https://docs.microsoft.com/en-us/windows/wsl/install-manual) or ask ITSO South to add it to the Company Portal
+       [here](https://docs.microsoft.com/en-us/windows/wsl/install-manual) or ask ITSO South to add it to the Company Portal
      - Alternatively, you can side-load any `.tar.gz` root file system with `wsl --import`. See test script for example.
    - Windows Subsystem for Linux Update
    - Docker
@@ -28,7 +28,8 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
 1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
    It is now included in Windows Terminal though so you won't need it there.
    - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
-1. Import `CiscoVPN-Network-Update.xml` as a scheduled task and copy `Cisco.ps1` to `C:\Users\jdnovick\Cisco.ps1`.
+1. I had issues previously with networking in WSL2 while on VPN. The issue seems to have fixed itself so just skip this step and move on.
+   If you are having issues though, import `CiscoVPN-Network-Update.xml` as a scheduled task and copy `Cisco.ps1` to `C:\Users\jdnovick\Cisco.ps1`.
    [Relevant GitHub issue](https://github.com/microsoft/WSL/issues/4277#issuecomment-639460712)
 1. Configure docker to use WSL2 backend and support the newly set up distro
 1. Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.
