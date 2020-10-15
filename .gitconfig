@@ -21,3 +21,5 @@
     mr = push -u origin $(git symbolic-ref -q HEAD)
 [credential]
     helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe
+[push]
+	default = current
