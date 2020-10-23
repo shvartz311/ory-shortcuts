@@ -14,7 +14,7 @@ alias decode="kubectl get secret -o go-template='{{if .items}}{{range .items}}$k
 alias unseal='kubeseal -o yaml --recovery-unseal --recovery-private-key <(kubectl get secret -n kube-system sealed-secrets-key -o yaml)'
 
 resetk8s(){
-  kubectl config use-context k8s-iei-eus2-dev-01
+  kubectl config use-context dev
   sed -i 's/access-token.*//' ~/.kube/config
 }
 

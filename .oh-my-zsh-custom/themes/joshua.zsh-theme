@@ -165,7 +165,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment green black '%~'
+  prompt_segment green black '%2~'
 }
 
 # Virtualenv: current working virtualenv
@@ -193,7 +193,7 @@ prompt_status() {
 prompt_kubecontext() {
     (( $+commands[kubectl] )) || return
 #        prompt_segment white black "k8s-`kubectl config current-context`/`kubectl config get-contexts --no-headers | grep '*' | awk '{print $5}'`"
-    prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context | sed -r 's/^k8s-iei-eus2-(.*)-01/\1/')"`
+    prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context)"`
 }
 
 function displaytime() {
