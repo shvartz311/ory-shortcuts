@@ -15,7 +15,8 @@ alias unseal='kubeseal -o yaml --recovery-unseal --recovery-private-key <(kubect
 
 resetk8s(){
   kubectl config use-context dev
-  sed -i 's/access-token.*//' ~/.kube/config
+  kubectl config set-credentials aks --auth-provider-arg=config-mode=1 --auth-provider-arg=access-token-
+  kubectl config set-credentials AZDevKubernetes1 --auth-provider-arg=config-mode=0 --auth-provider-arg=access-token-
 }
 
 alias kn='kubectl -n'
