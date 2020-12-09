@@ -19,6 +19,8 @@
   // If enabled, formatted data is also copied to your clipboard
   "copyFormatting": false,
 
+  "multiLinePasteWarning": false,
+
   // A profile specifies a command to execute paired with information about how it should look and feel.
   // Each one of them will appear in the 'New Tab' dropdown,
   //   and can be invoked from the commandline with `wt.exe -p xxx`
@@ -122,6 +124,18 @@
       // - "split": "auto" makes this pane open in the direction that provides the most surface area.
       // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
       // To learn more about panes, visit https://aka.ms/terminal-panes
-      { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" }
+      { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 0 }, "keys": "alt+shift+1" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 1 }, "keys": "alt+shift+2" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 2 }, "keys": "alt+shift+3" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 3 }, "keys": "alt+shift+4" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 4 }, "keys": "alt+shift+5" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 5 }, "keys": "alt+shift+6" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 6 }, "keys": "alt+shift+7" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 7 }, "keys": "alt+shift+8" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 8 }, "keys": "alt+shift+9" },
+      { "command": { "action": "splitPane", "split": "auto", "index": 9 }, "keys": "alt+shift+0" },
+
+      { "command": { "action": "toggleFocusMode" }, "keys": "alt+shift+f" }
   ]
 }

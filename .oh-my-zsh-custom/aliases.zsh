@@ -1,5 +1,8 @@
 alias go='cd /c/Users/Joshua/Documents/git/'
-alias vs="explorer.exe *.sln"
+vs(){
+  explorer.exe *.sln;
+  exit 0;
+}
 
 # Docker automatically installs an older version at /usr/local/bin/kubectl
 # but we want to point at correct newer version
@@ -11,8 +14,11 @@ alias decode="kubectl get secret -o go-template='{{if .items}}{{range .items}}$k
 alias unseal='kubeseal -o yaml --recovery-unseal --recovery-private-key <(kubectl get secret -n kube-system sealed-secrets-key -o yaml)'
 
 resetk8s(){
-  kubectl config use-context k8s-iei-eus2-dev-01
-  sed -i 's/access-token.*//' ~/.kube/config
+  kubectl config use-context dev
+  kubectl config set-credentials aks --auth-provider-arg=config-mode=1 --auth-provider-arg=access-token-
+  kubectl config set-credentials AZDevKubernetes1 --auth-provider-arg=config-mode=0 --auth-provider-arg=access-token-
 }
 
 alias kn='kubectl -n'
+
+alias azl='az account show > /dev/null 2> /dev/null || az login && az acr login -n acrieieus2dev && az acr login -n acrieieus2lib'
