@@ -20,5 +20,3 @@ resetk8s(){
 }
 
 alias kn='kubectl -n'
-
-alias azl='az account show > /dev/null 2> /dev/null || az login && az acr login -n acrieieus2dev && az acr login -n acrieieus2lib'

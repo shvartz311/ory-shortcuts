@@ -236,7 +236,7 @@ build_prompt() {
   prompt_context
   prompt_dir
   prompt_git
-  prompt_kubecontext
+#  prompt_kubecontext
   prompt_cmd_exec_time
   prompt_end
 }

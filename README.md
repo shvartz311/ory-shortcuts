@@ -14,13 +14,15 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    ```
 
 1. In a non-admin powershell, run this command: `wsl --set-default-version 2`
-1. Install these apps to from Company Portal or Software Center if they aren't already installed.
+1. Install these apps
    - Windows Terminal
    - Ubuntu
      - If you prefer a different distro, either download from
-       [here](https://docs.microsoft.com/en-us/windows/wsl/install-manual) or ask ITSO South to add it to the Company Portal
+       [here](https://docs.microsoft.com/en-us/windows/wsl/install-manual)
+       or the Microsoft Store
      - Alternatively, you can side-load any `.tar.gz` root file system with `wsl --import`. See test script for example.
    - Windows Subsystem for Linux Update
+     ([Available here](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package))
    - Docker
 1. Open Ubuntu distro for the first time to set up username and password within distro. This is independent of Windows password but can be set the same.
    - To change your password later, run `passwd`.

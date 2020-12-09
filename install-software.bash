@@ -28,13 +28,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
 sudo mkdir /c
 sudo mount --bind /mnt/c /c
-# I also like mounting the U drive
-sudo mkdir /mnt/u
-
-# Setup IEI certificates
-sudo cp certificates/IEIRadius.crt /usr/local/share/ca-certificates/
-sudo cp certificates/GNVSUBCA1.crt /usr/local/share/ca-certificates/
-sudo update-ca-certificates
 
 # nvm (npm, Node.js, etc.) - https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2#install-nvm-nodejs-and-npm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
