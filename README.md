@@ -53,18 +53,12 @@ If the powershell script in the last step above (`./powershell/install-dotfiles-
      options = "metadata,umask=22,fmask=11"
      ```
 
-   - Setup the [git credential manager](https://github.com/microsoft/Git-Credential-Manager-for-Windows/releases) before cloning if this
-     isn't already set up (It probably already is setup)
-
      ```bash
-     git clone -c credential.helper="/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe" https://github.com/jnovick/dotfiles.git
-
-     # Once the script is run, this will come from global ~/.gitconfig
-     # so we are unsetting it here. This is optional to do.
-     cd dotfiles && git config --unset credential.helper
+     # You can switch this to ssh later if you choose but until ssh keys are created and added in GitHub, you must use https
+     git clone https://github.com/jnovick/dotfiles.git
      ```
 
-1. Install dotfiles
+2. Install dotfiles
 
    - This can be re-run many times safely to link new files added to repo
    - If the dotfiles already exist, the script will rename them with `.<Date-Time>.bak` appended to the end
@@ -77,33 +71,12 @@ If the powershell script in the last step above (`./powershell/install-dotfiles-
    bash install-dotfiles.bash
    ```
 
-1. Install desired software
+3. Install desired software
    - This will prompt you for your password up to two times and switch default shell to zsh
    - This is not safe to re-run. Manually re-run pieces for updates, but not the whole thing.
 
 ```bash
 bash ./install-software.bash
-```
-
-## Migrating ssh keys
-
-Copy ssh keys to/from `U:\.ssh` drive. First you must mount the drive either permanantly or temporarilly.
-Before mounting, we must create a location to mount to with `sudo mkdir /mnt/u`
-
-```bash
-# Save keys to U drive
-cp $HOME/.ssh/* /mnt/u/.ssh
-# If copy fails because the file is not writable, run these
-sudo chmod 600 /mnt/u/.ssh/*
-sudo chmod 644 /mnt/u/.ssh/*.pub
-sudo chmod 644 /mnt/u/.ssh/known_hosts
-
-# Load keys from U drive
-cp /mnt/u/.ssh/* $HOME/.ssh
-sudo chmod 600 ~/.ssh/*
-# These two are optional
-sudo chmod 644 ~/.ssh/*.pub
-sudo chmod 644 ~/.ssh/known_hosts
 ```
 
 ## Testing script with fresh WSL Distro
