@@ -28,7 +28,7 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    - To change your password later, run `passwd`.
 1. Copy windows Terminal settings that you desire from [here](./WindowsTerminalSettings.jsonc).
 1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
-   It is now included in Windows Terminal though so you won't need it there.
+   Docs say it is now included in Windows Terminal so you shouldn't need it there, but my experience was having to manually install it.
    - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
 1. I had issues previously with networking in WSL2 while on VPN. The issue seems to have fixed itself so just skip this step and move on.
    If you are having issues though, import `CiscoVPN-Network-Update.xml` as a scheduled task and copy `Cisco.ps1` to `C:\Users\Joshua\Cisco.ps1`.
