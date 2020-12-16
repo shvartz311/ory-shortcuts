@@ -1,6 +1,6 @@
 # dotfiles
 
-If anyone wants to use this repo that is not me, please fork it and change `Joshua` everywhere to your own username.
+If anyone wants to use this repo that is not me, please fork it and change `a1156439` everywhere to your own username.
 Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place.
 **NEVER** Commit back sesitive information within any file such as `.ssh` or the `access-token` in `.kube/config`.
 
@@ -31,7 +31,7 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    Docs say it is now included in Windows Terminal so you shouldn't need it there, but my experience was having to manually install it.
    - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
 1. I had issues previously with networking in WSL2 while on VPN. The issue seems to have fixed itself so just skip this step and move on.
-   If you are having issues though, import `CiscoVPN-Network-Update.xml` as a scheduled task and copy `Cisco.ps1` to `C:\Users\Joshua\Cisco.ps1`.
+   If you are having issues though, import `CiscoVPN-Network-Update.xml` as a scheduled task and copy `Cisco.ps1` to `C:\Users\A1156439\Cisco.ps1`.
    [Relevant GitHub issue](https://github.com/microsoft/WSL/issues/4277#issuecomment-639460712)
 1. Configure docker to use WSL2 backend and support the newly set up distro
 1. Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.

@@ -1,17 +1,17 @@
 [core]
     editor = vim
-    excludesfile = /home/joshua/.gitignore
+    excludesfile = /home/a1156439/.gitignore
     autocrlf = input
 [user]
     name = Joshua Novick
-    email = novickjd@gmail.com
+    email = joshua.novick@hrblock.com
 [alias]
     cleanup = !git fetch origin --prune && git branch --merged origin/master | grep -v 'master$' | xargs git branch -d
     info = !~/.git-scripts/gitInfo.sh
     start = !~/.git-scripts/gitStart.sh
     redo = !git commit -a --amend -C HEAD && git push --force-with-lease
     vs = !explorer.exe *.sln
-    go = !cd /c/Users/Joshua/Documents/git/
+    go = !cd /c/Users/A1156439/Documents/git/
     compare = "!f() { \
         OTHER=${2:-$(git symbolic-ref -q HEAD --short)}; \
         git rev-list \"$1\"...\"$2\" --count --left-right | awk -v A=\"$1\" -v B=\"$OTHER\" '{print A,\"is\",\"\\033[32m\"$1\"\\033[39m\",\"commits ahead of\",B,\"and\",\"\\033[31m\"$2\"\\033[39m\",\"behind\"}'; \
