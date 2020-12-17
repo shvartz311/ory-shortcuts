@@ -48,6 +48,9 @@ yarn config set cafile /etc/ssl/certs/ca-certificates.crt -g
 # azure-cli - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
+# Install extra tools
+sudo apt-get install -y jq
+
 sudo touch /etc/wsl.conf
 sudo bash -c 'cat > /etc/wsl.conf <<_EOF
 [automount]
