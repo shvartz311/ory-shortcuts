@@ -48,6 +48,12 @@ yarn config set cafile /etc/ssl/certs/ca-certificates.crt -g
 # azure-cli - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
+# terraform (Locking to specific version)
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+# Other terraform versions can be found with apt list -a terraform
+sudo apt-get install -y terraform=0.12.29
+
 # Install extra tools
 sudo apt-get install -y jq
 
