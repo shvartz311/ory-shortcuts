@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cp /home/a1156439/dotfiles/powershell/Cisco.ps1 /mnt/c/Users/A1156439/Cisco.ps1
+/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe 'C:\Users\A1156439\Cisco.ps1'
+
 # Taken from https://community.cisco.com/t5/vpn/anyconnect-wsl-2-windows-substem-for-linux/td-p/4179888
 
 TMP=`mktemp`

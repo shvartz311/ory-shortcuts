@@ -35,7 +35,7 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
 1. Run powershell file: `./powershell/install-dotfiles-and-software.ps1`
    - When prompted, enter password. This will happen multiple times.
    - If this does not work, you can use manual instructions for dotfiles below.
-1. To fix VPN issues, run `powershell/Cisco.ps1` as admin and use the `vpn` alias in WSL2. Once disconnected from VPN, run `unvpn` in WSL2 or 
+1. To fix VPN issues, use the `vpn` alias in WSL2 while Windows account has admin access. Once disconnected from VPN, run `unvpn` in WSL2 or
    close and re-open it. This could be automated with a scheduled task but this is not supported by the HRB setup.
 
 ## Manual instructions for configuring dotfiles
