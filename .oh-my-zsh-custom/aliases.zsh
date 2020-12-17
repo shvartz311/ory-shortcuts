@@ -20,3 +20,6 @@ resetk8s(){
 }
 
 alias kn='kubectl -n'
+
+alias vpn='sudo ~/vpn-fix.bash'
+alias unvpn='sudo ~/un-vpn-fix.bash'

@@ -54,5 +54,8 @@ sudo bash -c 'cat > /etc/wsl.conf <<_EOF
 options = "metadata,umask=22,fmask=11"
 _EOF'
 
+sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/vpn-fix.bash" >> /etc/sudoers'
+sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/un-vpn-fix.bash" >> /etc/sudoers'
+
 chsh -s /bin/zsh
 exec zsh -l
