@@ -152,7 +152,7 @@ prompt_git() {
     [[ $ahead -gt 0 ]] && prompt_segment $bg green "%{%F{green}%}$ahead↑"
     [[ $behind -gt 0 ]] && prompt_segment $bg red "$behind↓"
 
-    if [[ $remote != 'origin/master' && -v $(git branch -rl origin/master) ]]; then
+    if [[ $remote != 'origin/master' && ! -z $(git branch -rl origin/master) ]]; then
       ahead=$(git rev-list "origin/master..HEAD" --count)
       behind=$(git rev-list "HEAD..origin/master" --count)
 
