@@ -6,7 +6,8 @@ vs(){
 
 # Docker automatically installs an older version at /usr/local/bin/kubectl
 # but we want to point at correct newer version
-alias kubectl='/usr/bin/kubectl'
+# Only do this though if the version we want exists
+[[ -d "/usr/bin/kubectl" ]] && alias kubectl='/usr/bin/kubectl'
 
 kubesecretdecodetemplate="{{\"-----------------------------------\n\"}}{{.metadata.name}}{{\"\n-----------------------------------\n\"}}{{range \$k,\$v := .data}}{{printf \"%s: \" \$k}}{{if not \$v}}{{\$v}}{{else}}{{\$v | base64decode}}{{end}}{{\"\n\n\"}}{{end}}"
 alias decode="kubectl get secret -o go-template='{{if .items}}{{range .items}}$kubesecretdecodetemplate{{\"\n\"}}{{end}}{{else}}$kubesecretdecodetemplate{{end}}'"
