@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SCRIPTPATH=$(dirname $(readlink -f "$0") )
 
