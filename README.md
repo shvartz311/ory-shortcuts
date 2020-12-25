@@ -63,11 +63,11 @@ If the powershell script in the last step above (`./powershell/install-dotfiles-
    - If the dotfiles already exist, the script will rename them with `.<Date-Time>.bak` appended to the end
 
    ```bash
-   chmod +x install-dotfiles.bash
-   ./install-dotfiles.bash
+   chmod +x install.sh
+   ./install.sh
 
    # Alternatively, instead of using chmod, you could do:
-   bash install-dotfiles.bash
+   bash install.sh
    ```
 
 3. Install desired software

@@ -16,5 +16,5 @@ Get-ItemProperty Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentV
 wsl.exe -d ubuntu-throwaway-2004 bash -c "cd ~ && \
 git clone -c credential.helper='/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe' https://gitlab.infiniteenergy.dev/Joshua/dotfiles.git && \
 cd dotfiles && git config --unset credential.helper && \
-bash install-dotfiles.bash && \
+bash install.sh && \
 bash install-software.bash"
