@@ -1,4 +1,3 @@
-alias go='cd /c/Users/A1156439/Documents/git/'
 vs(){
   explorer.exe *.sln;
   exit 0;
