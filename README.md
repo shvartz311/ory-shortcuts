@@ -29,7 +29,6 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
 1. Copy windows Terminal settings that you desire from [here](./WindowsTerminalSettings.jsonc).
 1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
    Docs say it is now included in Windows Terminal so you shouldn't need it there, but my experience was having to manually install it.
-   - Configure VS Code to use correct font `"terminal.integrated.fontFamily": "Cascadia Code PL"`
 1. Configure docker to use WSL2 backend and support the newly set up distro
 1. Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.
 1. Run powershell file: `./powershell/install-dotfiles-and-software.ps1`
@@ -37,10 +36,20 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    - If this does not work, you can use manual instructions for dotfiles below.
 1. To fix VPN issues, use the `vpn` alias in WSL2 while Windows account has admin access. Once disconnected from VPN, run `unvpn` in WSL2 or
    close and re-open it. This could be automated with a scheduled task but this is not supported by the HRB setup.
+1. Configure VS Code to desired settings
+
+   ```jsonc
+   {
+     "terminal.integrated.fontFamily": "Cascadia Code PL",
+     "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
+     "dotfiles.repository": "jnovick/dotfiles",
+     "terminal.integrated.shell.linux": "/bin/zsh"
+   }
+   ```
 
 ## Manual instructions for configuring dotfiles
 
-If the powershell script in the last step above (`./powershell/install-dotfiles-and-software.ps1`) fails, these steps are the manual equivalent
+If the powershell script above (`./powershell/install-dotfiles-and-software.ps1`) fails, these steps are the manual equivalent
 
 1. Clone git repo inside distro
 
