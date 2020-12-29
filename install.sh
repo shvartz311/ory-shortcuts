@@ -11,6 +11,7 @@ FILES=(
   .npmrc
   .tmux.conf
   .yarnrc
+  .zprofile
   .zshrc
   vpn-fix.bash # Not a dotfile but we want the symlink here
   un-vpn-fix.bash # Not a dotfile but we want the symlink here
