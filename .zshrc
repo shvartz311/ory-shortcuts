@@ -75,6 +75,7 @@ plugins=(
   dotnet
   npm
   yarn
+  ssh-agent
 )
 
 source $ZSH/oh-my-zsh.sh
