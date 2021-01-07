@@ -50,9 +50,21 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 # terraform (Locking to specific version)
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" -y
 # Other terraform versions can be found with apt list -a terraform
 sudo apt-get install -y terraform=0.12.29
+
+# Python
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt install -y python3.8 python3-venv python3-pip
+
+# Ruby
+sudo apt-get install -y ruby-full
+
+# Install markdown renderer
+gem install mdless
+pip install Pygments
 
 # Install extra tools
 sudo apt-get install -y jq
