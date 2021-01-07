@@ -23,3 +23,20 @@ alias kn='kubectl -n'
 
 alias vpn='sudo ~/vpn-fix.bash'
 alias unvpn='sudo ~/un-vpn-fix.bash'
+
+alias pip='pip3'
+
+clone(){
+  git clone $( echo $PWD | sed "s;/home/a1156439/git/;git@ssh.dev.azure.com:v3/hrblock/;" )/$1 && cd $1;
+}
+
+cd()
+{
+  if [[ -d $1 || $1 == -* || $1 == +* || -z $1 ]]; then
+    builtin cd "$@" 2> >(sed 's/cd:[0-9]\+://')
+  elif [[ $PWD == '/home/a1156439/git/'* ]]; then
+    clone $1 1>&1 2> /dev/null || builtin cd "$@" 2> >(sed 's/cd:[0-9]\+://')
+  else
+    builtin cd "$@" 2> >(sed 's/cd:[0-9]\+://')
+  fi
+}
