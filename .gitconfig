@@ -7,6 +7,7 @@
     email = joshua.novick@hrblock.com
 [alias]
     cleanup = !git fetch origin --prune && git branch --merged origin/master | grep -v 'master$' | xargs git branch -d
+    changelog = !~/.git-scripts/gitChangelog.sh
     info = !~/.git-scripts/gitInfo.sh
     start = !~/.git-scripts/gitStart.sh
     redo = !git commit -a --amend -C HEAD && git push --force-with-lease
