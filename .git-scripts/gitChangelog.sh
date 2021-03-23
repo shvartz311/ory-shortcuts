@@ -1,6 +1,6 @@
 #! /bin/bash
 
-BASE_URL=$(git remote get-url origin | sed "s;git@ssh.dev.azure.com:v3/hrblock/;https://dev.azure.com/hrblock;")
+BASE_URL=$(git remote get-url origin | sed "s;git@ssh.dev.azure.com:v3/hrblock/TFE;https://dev.azure.com/hrblock/TFE/_git;")
 
 echo "# Changelog" > CHANGELOG.md
 
