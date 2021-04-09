@@ -2,6 +2,7 @@
     editor = vim
     excludesfile = /home/a1156439/.gitignore
     autocrlf = input
+    hooksPath = ~/.git-scripts/hooks
 [user]
     name = Joshua Novick
     email = joshua.novick@hrblock.com

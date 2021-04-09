@@ -1,0 +1,45 @@
+#!/bin/bash
+COMMIT_MESSAGE=`cat $1`
+
+[[ $PWD == "/home/a1156439/dotfiles" ]] && exit 0;
+
+CONVENTIONAL_COMMIT_REGEX='(feat|fix|refactor|docs|ci|test|style)(\(.+\))?!?:'
+CONVENTIONAL_COMMIT_CHECK=`echo $COMMIT_MESSAGE | grep -E "$CONVENTIONAL_COMMIT_REGEX"`
+
+TICKET_REGEX='#[0-9]+'
+TICKET_CHECK=`echo $COMMIT_MESSAGE | grep -E "$TICKET_REGEX"`
+
+if [[ -z "$CONVENTIONAL_COMMIT_CHECK" ]]
+then
+  echo "------------------------------------------------------------------------"
+  echo "Your commit message must follow this pattern"
+  echo "-------------------------"
+  echo "  <type>(optional scope in parentheses): <description subject>"
+  echo " "
+  echo "  <description body>"
+  echo "-------------------------"
+  echo " "
+  echo "Valid types: feat, fix, refactor, docs, ci, test, style"
+  echo " "
+  echo "Verified by this regex: $CONVENTIONAL_COMMIT_REGEX"
+  echo " "
+  echo "------------------------------------------------------------------------"
+  echo " "
+fi
+
+if  [[ -z "$TICKET_CHECK" ]]
+then
+  echo "------------------------------------------------------------------------"
+  echo "Your commit message must contain a ticket number. For example:"
+  echo "  Work Item(s): #12345"
+  echo "Where 12345 is replaced with the ticket number"
+  echo " "
+  echo "Verified by this regex: $TICKET_REGEX"
+  echo " "
+  echo "------------------------------------------------------------------------"
+  echo " "
+fi
+
+[[ -z "$CONVENTIONAL_COMMIT_CHECK" || -z "$TICKET_CHECK" ]] && exit 1
+
+exit 0
