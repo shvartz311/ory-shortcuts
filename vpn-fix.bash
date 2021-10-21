@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cp /home/a1156439/dotfiles/powershell/Cisco.ps1 /mnt/c/Users/A1156439/Cisco.ps1
-/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe 'C:\Users\A1156439\Cisco.ps1'
+cp /home/joshua/dotfiles/powershell/Cisco.ps1 /mnt/c/Users/josno/Cisco.ps1
+/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0//powershell.exe 'C:\Users\josno\Cisco.ps1'
 
 # Taken from https://community.cisco.com/t5/vpn/anyconnect-wsl-2-windows-substem-for-linux/td-p/4179888
 
@@ -27,9 +27,9 @@ echo
 echo "Creating new resolv.conf"
 echo "------------------------"
 
-{ 
+{
 	head -1 /etc/resolv.conf | grep '^#.*generated'
-	for i in `/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command "Get-DnsClientServerAddress -AddressFamily ipv4 | Select-Object -ExpandProperty ServerAddresses"`; do 
+	for i in `/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command "Get-DnsClientServerAddress -AddressFamily ipv4 | Select-Object -ExpandProperty ServerAddresses"`; do
 		echo nameserver $i
 	done
 	tail -n+2 /etc/resolv.conf | grep -v '^nameserver'

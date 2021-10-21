@@ -1,8 +1,8 @@
 #!/bin/bash
 COMMIT_MESSAGE=`cat $1`
 
-[[ $PWD == "/home/a1156439/dotfiles" ]] && exit 0;
-[[ $PWD == "/home/a1156439/git/Cloud/tfe_application_info" ]] && exit 0;
+[[ $PWD == "/home/joshua/dotfiles" ]] && exit 0;
+[[ $PWD == "/home/joshua/git/Cloud/tfe_application_info" ]] && exit 0;
 
 CONVENTIONAL_COMMIT_REGEX='(feat|fix|refactor|docs|ci|test|style)(\(.+\))?!?:'
 CONVENTIONAL_COMMIT_CHECK=`echo $COMMIT_MESSAGE | grep -E "$CONVENTIONAL_COMMIT_REGEX"`

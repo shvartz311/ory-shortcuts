@@ -1,6 +1,6 @@
 # dotfiles
 
-If anyone wants to use this repo that is not me, please fork it and change `a1156439` everywhere to your own username.
+If anyone wants to use this repo that is not me, please fork it and change `joshua` and `josno` everywhere to your own username.
 Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place.
 **NEVER** Commit back sesitive information within any file such as `.ssh` or the `access-token` in `.kube/config`.
 
