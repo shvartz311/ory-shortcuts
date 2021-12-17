@@ -10,14 +10,17 @@ sudo apt-get install -y kubectl
 # Remove version of kubectl installed by docker (I have had to do this a couple more times. I will look for more permanent solution later.)
 sudo rm /usr/local/bin/kubectl
 
-# dotnet - https://docs.microsoft.com/en-us/dotnet/core/install/linux#ubuntu
+# Helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# dotnet - https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 sudo apt-get update
 # sudo apt-get install -y apt-transport-https && \
 # sudo apt-get update
-sudo apt-get install -y dotnet-sdk-3.1
+sudo apt-get install -y dotnet-sdk-5.0
 
 # oh-my-zsh - https://ohmyz.sh/
 sudo apt-get install -y zsh
@@ -47,12 +50,17 @@ yarn config set cafile /etc/ssl/certs/ca-certificates.crt -g
 
 # azure-cli - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+az config set auto-upgrade.enable=yes
 
 # terraform (Locking to specific version)
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" -y
+
 # Other terraform versions can be found with apt list -a terraform
 sudo apt-get install -y terraform=0.12.29
+
+# Plumi
+curl -fsSL https://get.pulumi.com | sh
 
 # Python
 sudo apt install -y software-properties-common
