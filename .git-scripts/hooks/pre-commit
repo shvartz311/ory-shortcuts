@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ $(git rev-parse --show-toplevel) != '/home/joshua/dotfiles' ]]; then exit 0; fi
+
+if [[ $(git diff --no-ext-diff --cached .kube/config | grep --count -e "token") -ne 0 ]]; then
+    cat <<EOW
+WARNING: You are attempting to commit changes which are not supposed to be commited according to this \`pre-commit\` hook
+This \`pre-commit\` hook will unstage those changes.
+
+EOW
+
+    git diff -R --cached -U0 .kube/config\
+      | grepdiff -E '(access-token)|(expires-in)|(expires-on)|(refresh-token)|(client-certificate-data)|(client-key-data)|(token)' --output-matching=hunk\
+      | git apply --cached --unidiff-zero
+
+    # BONUS: Check if after reseting, there is no actual changes to be commited and if so, exit 1 so the commit process will abort.
+    if [[ $(git diff --no-ext-diff --cached | wc -l) -eq 0 ]]; then
+        echo there are no actual changes to be commited and besides the secrets in \'.kube/config\' so I won\'t commit.
+        exit 1
+    fi
+fi
