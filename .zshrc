@@ -69,6 +69,7 @@ ZSH_CUSTOM=/home/$USER/.oh-my-zsh-custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  aliases
   git
   kubectl
   nvm
