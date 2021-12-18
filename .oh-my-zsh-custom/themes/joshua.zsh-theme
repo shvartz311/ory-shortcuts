@@ -152,9 +152,11 @@ prompt_git() {
     [[ $ahead -gt 0 ]] && prompt_segment $bg green "%{%F{green}%}$ahead↑"
     [[ $behind -gt 0 ]] && prompt_segment $bg red "$behind↓"
 
-    if [[ $remote != 'origin/master' && ! -z $(git branch -rl origin/master) ]]; then
-      ahead=$(git rev-list "origin/master..HEAD" --count)
-      behind=$(git rev-list "HEAD..origin/master" --count)
+    remote_main_branch=origin/$(git_remote_branch)
+
+    if [[ $remote != $remote_main_branch && ! -z $(git branch -rl $remote_main_branch) ]]; then
+      ahead=$(git rev-list "$remote_main_branch..HEAD" --count)
+      behind=$(git rev-list "HEAD..$remote_main_branch" --count)
 
       [[ $ahead -gt 0 || $behind -gt 0 ]] && prompt_segment $bg magenta "❯"
       [[ $ahead -gt 0 ]] &&  prompt_segment $bg green "$ahead↑"

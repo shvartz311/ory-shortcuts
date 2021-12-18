@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
-git fetch origin master:$1 && git checkout $1 && git push -u origin $1
+source ~/.oh-my-zsh-custom/misc.zsh
+git fetch origin $(git_remote_branch):$1 && git checkout $1 && git push -u origin $1

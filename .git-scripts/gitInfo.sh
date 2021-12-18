@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
+
+source ~/.oh-my-zsh-custom/misc.zsh
 
 remote=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
 pruned=true
@@ -50,21 +52,23 @@ print_status () {
     echo
 }
 
-if [[ $(git rev-parse --quiet --verify origin/master | awk '{print length}') -ne 0 ]]; then
-    print_status origin/master
+remote_main_branch=origin/$(git_remote_branch)
+
+if [[ $(git rev-parse --quiet --verify $remote_main_branch | awk '{print length}') -ne 0 ]]; then
+    print_status $remote_main_branch
 fi
 
 if [[ $(git rev-parse --quiet --verify $BRANCH | awk '{print length}') -eq 0 ]]; then
     printf "\e[31mNo remote tracking branch\e[39" ""
     echo
-elif [[ $BRANCH != 'origin/master' ]]; then
+elif [[ $BRANCH != $remote_main_branch ]]; then
     print_status $BRANCH
 fi
 
 
 for branch in $(git branch -r)
 do
-    if [[ $ALL = true && $branch != origin/master && $branch != origin/HEAD && $branch != '->' && $branch != $BRANCH ]]; then
+    if [[ $ALL = true && $branch != $remote_main_branch && $branch != origin/HEAD && $branch != '->' && $branch != $BRANCH ]]; then
         print_status $branch
     fi
 done
