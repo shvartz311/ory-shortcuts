@@ -1,0 +1,6 @@
+#compdef _set_pulumi_context set_pulumi_context
+
+_set_pulumi_context()
+{
+  _values 'set_pulumi_context' $(az keyvault secret list --subscription '11cf0077-bfb8-4091-b0ea-74a22e21a53d' --vault-name 'tplat-sre-global-kv' --query="[?starts_with(name,'pulumi-stack-passphrase')].name" -o tsv | sed 's/pulumi-stack-passphrase-\(.*\)/\1/')
+}

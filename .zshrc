@@ -77,6 +77,7 @@ plugins=(
   npm
   yarn
   ssh-agent
+  pulumi
 )
 
 source $ZSH/oh-my-zsh.sh
