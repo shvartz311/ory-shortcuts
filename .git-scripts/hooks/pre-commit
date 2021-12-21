@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $(git rev-parse --show-toplevel) != '/home/joshua/dotfiles' ]]; then exit 0; fi
+if [[ $(git rev-parse --show-toplevel) != "$HOME/dotfiles" ]]; then exit 0; fi
 
 if [[ $(git diff --no-ext-diff --cached .kube/config | grep --count -e "token") -ne 0 ]]; then
     cat <<EOW
