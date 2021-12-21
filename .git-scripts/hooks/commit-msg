@@ -1,4 +1,7 @@
 #!/bin/bash
+
+exit 0;
+
 COMMIT_MESSAGE=`cat $1`
 
 [[ $PWD == "/home/joshua/dotfiles" ]] && exit 0;
