@@ -1,6 +1,38 @@
 #compdef _set_pulumi_context set_pulumi_context
 
+__set_pulumi_context_caching_policy() {
+    oldp=( "$1"(Nmm+5) )     # Rebuild if older than 5 minutes
+    (( $#oldp ))
+}
+
+__get_pulumi_contexts() {
+    local cache_policy
+
+    zstyle -s ":completion:${curcontext}:" cache-policy cache_policy
+    if [[ -z "$cache_policy" ]]; then
+        zstyle ":completion:${curcontext}:" cache-policy __set_pulumi_context_caching_policy
+    fi
+
+    if ( [[ ${+_contexts} -eq 0 ]] || _cache_invalid set_pulumi_context ) \
+        && ! _retrieve_cache set_pulumi_context;
+    then
+        az account show > /dev/null 2> /dev/null && \
+        _contexts=(${(f)"$(az keyvault secret list --subscription '11cf0077-bfb8-4091-b0ea-74a22e21a53d' --vault-name 'tplat-sre-global-kv' --query="[?starts_with(name,'pulumi-stack-passphrase')].name" -o tsv | sed 's/pulumi-stack-passphrase-\(.*\)/\1/')"}) && \
+        _store_cache set_pulumi_context _contexts
+    fi
+
+    if [[ $_contexts != '' ]]; then
+      _values 'set_pulumi_context' $_contexts
+    fi
+}
+
 _set_pulumi_context()
 {
-  _values 'set_pulumi_context' $(az keyvault secret list --subscription '11cf0077-bfb8-4091-b0ea-74a22e21a53d' --vault-name 'tplat-sre-global-kv' --query="[?starts_with(name,'pulumi-stack-passphrase')].name" -o tsv | sed 's/pulumi-stack-passphrase-\(.*\)/\1/')
+  local -a contexts
+
+  _arguments  -A "-*" \
+    '(--help -h --local -l)'{--local,-l}'[Recursively searches up directories for .pulumi/ backend. Password must be set manually with --password option]' \
+    '(--help -h --password -p)'{--password,-p}'[Manually sets the password instead of pulling from cloud. When used with --local, it defaults to empty string]:password: ' \
+    '(--local -l --password -p --help -h)'{--help,-h}'[Display help text]:*:' \
+    ":context:__get_pulumi_contexts"
 }
