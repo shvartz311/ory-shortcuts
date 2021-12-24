@@ -19,7 +19,13 @@ print_password() {
 
   LENGTH=${#1}
   PREFIX=${1:0:$PREFIX_LENGTH}
-  SUFFIX=${1:(-$SUFFIX_LENGTH)}
+
+  if [[ $SUFFIX_LENGTH -eq 0 ]]; then
+    SUFFIX=""
+  else
+    SUFFIX=${1:(-$SUFFIX_LENGTH)}
+  fi
+
 
   if [[ $(expr $PREFIX_LENGTH + $SUFFIX_LENGTH) -gt $LENGTH ]]; then
     echo "$1"
@@ -31,4 +37,7 @@ print_password() {
       echo "$PREFIX${stars// /*}$SUFFIX"
     fi
   fi
+
+  unset PREFIX
+  unset SUFFIX
 }
