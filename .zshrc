@@ -73,6 +73,7 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 plugins=(
   aliases
   git
+  git-auto-fetch
   kubectl
   nvm
   dotnet

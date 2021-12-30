@@ -58,7 +58,27 @@ esac
   # what font the user is viewing this source code in. Do not replace the
   # escape sequence with a single literal character.
   # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
-  SEGMENT_SEPARATOR=$'\ue0b0'
+  SEGMENT_SEPARATOR=$'\ue0b0' # 
+
+  # More options:
+
+  # '\ue0a0' -     '\ue0b0' -     '\ue0c0' -     '\ue0d0' - 
+  # '\ue0a1' -     '\ue0b1' -     '\ue0c1' -     '\ue0d1' - 
+  # '\ue0a2' -     '\ue0b2' -     '\ue0c2' -     '\ue0d2' - 
+  # '\ue0a3' -     '\ue0b3' -     '\ue0c3' - 
+  # '\ue0c3' -     '\ue0b4' -     '\ue0c4' -     '\ue0d4' - 
+  #                 '\ue0b5' -     '\ue0c5' - 
+  #                 '\ue0b6' -     '\ue0c6' - 
+  #                 '\ue0b7' -     '\ue0c7' - 
+  #                 '\ue0b8' -     '\ue0c8' - 
+  #                 '\ue0b9' - 
+  #                 '\ue0ba' -     '\ue0ca' - 
+  #                 '\ue0bb' - 
+  #                 '\ue0bc' -     '\ue0cc' - 
+  #                 '\ue0bd' -     '\ue0cd' - 
+  #                 '\ue0be' -     '\ue0ce' - 
+  #                 '\ue0bf' -     '\ue0cf' - 
+
 }
 
 # Begin a segment
@@ -142,15 +162,46 @@ prompt_git() {
     zstyle ':vcs_info:*' unstagedstr '●'
     zstyle ':vcs_info:*' formats ' %u%c'
     zstyle ':vcs_info:*' actionformats ' %u%c'
+
     vcs_info
     echo -n "${ref/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}"
+  fi
+}
 
+rprompt_git_tracking() {
+  (( $+commands[git] )) || return
+  if [[ "$(git config --get oh-my-zsh.hide-status 2>/dev/null)" = 1 ]]; then
+    return
+  fi
+
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     remote=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
-    ahead=$(git rev-list "$remote..HEAD" --count)
-    behind=$(git rev-list "HEAD..$remote" --count)
+    remote_main_branch=origin/$(git_remote_branch)
 
-    [[ $ahead -gt 0 ]] && prompt_segment $bg green "%{%F{green}%}$ahead↑"
-    [[ $behind -gt 0 ]] && prompt_segment $bg red "$behind↓"
+    if [[ $remote != '' ]]; then
+      ahead=$(git rev-list "$remote..HEAD" --count)
+      behind=$(git rev-list "HEAD..$remote" --count)
+
+      [[ $ahead -gt 0 ]] && prompt_segment $CURRENT_BG green "$ahead↑"
+      [[ $behind -gt 0 ]] && prompt_segment $CURRENT_BG red "$behind↓"
+
+      tracking_length=${#remote}
+      main_length=${#remote_main_branch}
+      length=$(( tracking_length > main_length ? tracking_length : main_length ))
+
+      echo -n "%{%f%}  ${(l:$length:: :)${remote}}"
+    fi
+  fi
+}
+
+rprompt_git_main() {
+  (( $+commands[git] )) || return
+  if [[ "$(git config --get oh-my-zsh.hide-status 2>/dev/null)" = 1 ]]; then
+    return
+  fi
+
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    remote=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
 
     remote_main_branch=origin/$(git_remote_branch)
 
@@ -158,24 +209,22 @@ prompt_git() {
       ahead=$(git rev-list "$remote_main_branch..HEAD" --count)
       behind=$(git rev-list "HEAD..$remote_main_branch" --count)
 
-      [[ $ahead -gt 0 || $behind -gt 0 ]] && prompt_segment $bg magenta "❯"
-      [[ $ahead -gt 0 ]] &&  prompt_segment $bg green "$ahead↑"
-      [[ $behind -gt 0 ]] && prompt_segment $bg red "$behind↓"
+      [[ $ahead -gt 0 ]] && prompt_segment $CURRENT_BG green "$ahead↑"
+      [[ $behind -gt 0 ]] && prompt_segment $CURRENT_BG red "$behind↓"
+
+      tracking_length=${#remote}
+      main_length=${#remote_main_branch}
+      length=$(( tracking_length > main_length ? tracking_length : main_length ))
+
+      echo -n "%{%f%}  ${(l:$length:: :)${remote_main_branch}}"
     fi
   fi
 }
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment green black '%2~'
-}
-
-# Virtualenv: current working virtualenv
-prompt_virtualenv() {
-  local virtualenv_path="$VIRTUAL_ENV"
-  if [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
-    prompt_segment blue black "(`basename $virtualenv_path`)"
-  fi
+  width=$(($COLUMNS / 5))
+  prompt_segment green black "%${width}<...<%2~%<<"
 }
 
 # Status:
@@ -194,11 +243,10 @@ prompt_status() {
 
 prompt_kubecontext() {
     (( $+commands[kubectl] )) || return
-#        prompt_segment white black "k8s-`kubectl config current-context`/`kubectl config get-contexts --no-headers | grep '*' | awk '{print $5}'`"
     prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context)"`
 }
 
-function displaytime() {
+displaytime() {
   local T=$1
   local D=$((T/60/60/24))
   local H=$((T/60/60%24))
@@ -211,7 +259,7 @@ function displaytime() {
 }
 
 prompt_time() {
-  prompt_segment black white %D{%r}
+  prompt_segment black white '%D{%r}'
 }
 
 prompt_cmd_exec_time() {
@@ -229,11 +277,41 @@ precmd() {
   cmd_timestamp=''
 }
 
+prompt-length() {
+  emulate -L zsh
+  local -i COLUMNS=${2:-COLUMNS}
+  local -i x y=${#1} m
+  if (( y )); then
+    while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
+      x=y
+      (( y *= 2 ))
+    done
+    while (( y > x + 1 )); do
+      (( m = x + (y - x) / 2 ))
+      (( ${${(%):-$1%$m(l.x.y)}[-1]} = m ))
+    done
+  fi
+  echo $x
+}
+
+fill-line() {
+  emulate -L zsh
+  local -i left_len=$(prompt-length $1)
+  local -i right_len=$(prompt-length $2 9999)
+  local -i pad_len=$((COLUMNS - left_len - right_len - ${ZLE_RPROMPT_INDENT:-1}))
+  if (( pad_len < 1 )); then
+    # Not enough space for the right part. Drop it.
+    echo $1
+  else
+    local pad=${(pl.$pad_len.. .)}  # pad_len spaces
+    echo ${1}${pad}${2}
+  fi
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
   prompt_status
-  prompt_virtualenv
   prompt_time
   prompt_context
   prompt_dir
@@ -243,4 +321,5 @@ build_prompt() {
   prompt_end
 }
 
-PROMPT='%{%f%b%k%}$(build_prompt) '
+PROMPT='$NEWLINE$(fill-line "$(build_prompt)" "$(rprompt_git_main)")$NEWLINE$PROMPTCHAR '
+RPROMPT='$(rprompt_git_tracking)'
