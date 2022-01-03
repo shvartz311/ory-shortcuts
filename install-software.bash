@@ -76,6 +76,9 @@ pip install Pygments
 
 # Install extra tools
 sudo apt-get install -y jq
+wget https://github.com/mikefarah/yq/releases/download/v4.16.2/yq_linux_amd64.tar.gz -O - |\
+  tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
+
 
 sudo touch /etc/wsl.conf
 sudo bash -c 'cat > /etc/wsl.conf <<_EOF
@@ -86,5 +89,5 @@ _EOF'
 sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/vpn-fix.bash" >> /etc/sudoers'
 sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/un-vpn-fix.bash" >> /etc/sudoers'
 
-chsh -s /bin/zsh
+chsh -s /usr/bin/zsh
 exec zsh -l

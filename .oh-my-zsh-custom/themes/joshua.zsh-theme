@@ -246,6 +246,26 @@ prompt_kubecontext() {
     prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context)"`
 }
 
+prompt_pulumi() {
+  if [[ -f Pulumi.yaml && ( -d .pulumi || "$PULUMI_CONFIG_PASSPHRASE" != '' ) ]]; then
+    BACKEND=$(jq -r '.current' $HOME/.pulumi/credentials.json 2> /dev/null)
+
+    if [[ "${BACKEND#*azblob://}" != "$BACKEND" ]]; then
+      BACKEND=$(echo $BACKEND | sed 's|azblob://pulumi-\(.*\)-state|\1|')
+    else
+      BACKEND=$(echo $BACKEND | sed "s|file:///home/$USER/git|file:...|")
+    fi
+
+    STACK=$(yq e .stack $HOME/.pulumi/workspaces/$(yq e '.name' Pulumi.yaml)-*-workspace.json(N) 2> /dev/null)
+    prompt_segment magenta black "$BACKEND"
+
+    if [[ $STACK != '' ]]; then
+      prompt_segment magenta black ""
+      prompt_segment magenta black "$STACK"
+    fi
+  fi
+}
+
 displaytime() {
   local T=$1
   local D=$((T/60/60/24))
@@ -317,6 +337,7 @@ build_prompt() {
   prompt_dir
   prompt_git
   prompt_kubecontext
+  prompt_pulumi
   prompt_cmd_exec_time
   prompt_end
 }
