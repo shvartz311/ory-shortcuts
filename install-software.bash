@@ -75,10 +75,14 @@ gem install mdless
 pip install Pygments
 
 # Install extra tools
+# jq
 sudo apt-get install -y jq
-wget https://github.com/mikefarah/yq/releases/download/v4.16.2/yq_linux_amd64.tar.gz -O - |\
-  tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
 
+# yq
+wget https://github.com/mikefarah/yq/releases/download/v4.16.2/yq_linux_amd64.tar.gz -O - | tar xz
+sudo mv yq_linux_amd64 /usr/bin/yq
+sudo sh ./install-man-page.sh
+rm install-man-page.sh yq.1
 
 sudo touch /etc/wsl.conf
 sudo bash -c 'cat > /etc/wsl.conf <<_EOF
