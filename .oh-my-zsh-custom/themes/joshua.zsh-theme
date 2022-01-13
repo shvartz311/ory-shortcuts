@@ -179,8 +179,8 @@ rprompt_git_tracking() {
     remote_main_branch=origin/$(git_remote_branch)
 
     if [[ $remote != '' ]]; then
-      ahead=$(git rev-list "$remote..HEAD" --count)
-      behind=$(git rev-list "HEAD..$remote" --count)
+      ahead=$(git rev-list "$remote..HEAD" --count 2> /dev/null)
+      behind=$(git rev-list "HEAD..$remote" --count 2> /dev/null)
 
       [[ $ahead -gt 0 ]] && prompt_segment $CURRENT_BG green "$ahead↑"
       [[ $behind -gt 0 ]] && prompt_segment $CURRENT_BG red "$behind↓"
@@ -206,8 +206,8 @@ rprompt_git_main() {
     remote_main_branch=origin/$(git_remote_branch)
 
     if [[ $remote != $remote_main_branch && ! -z $(git branch -rl $remote_main_branch) ]]; then
-      ahead=$(git rev-list "$remote_main_branch..HEAD" --count)
-      behind=$(git rev-list "HEAD..$remote_main_branch" --count)
+      ahead=$(git rev-list "$remote_main_branch..HEAD" --count 2> /dev/null)
+      behind=$(git rev-list "HEAD..$remote_main_branch" --count 2> /dev/null)
 
       [[ $ahead -gt 0 ]] && prompt_segment $CURRENT_BG green "$ahead↑"
       [[ $behind -gt 0 ]] && prompt_segment $CURRENT_BG red "$behind↓"

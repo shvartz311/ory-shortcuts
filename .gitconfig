@@ -12,6 +12,7 @@
     info = !~/.git-scripts/gitInfo.sh
     start = !~/.git-scripts/gitStart.sh
     redo = !git commit -a --amend -C HEAD && git push --force-with-lease
+    repull = !git fetch && git branch "$(git rev-parse --abbrev-ref HEAD)_BACKUP_$(date +"%Y_%m_%d_%I_%M_%p")" && git reset --hard $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
     vs = !explorer.exe *.sln
     go = !cd /c/Users/josno/Documents/git/
     compare = "!f() { \
