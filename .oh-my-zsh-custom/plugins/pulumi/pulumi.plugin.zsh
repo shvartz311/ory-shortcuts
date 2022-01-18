@@ -102,6 +102,10 @@ set_pulumi_context(){
     hub|shared|spoke|wan)
       export AZURE_STORAGE_ACCOUNT="olympiacstate"
       ;;
+    legacy-spoke)
+      export AZURE_STORAGE_ACCOUNT="olympiacstate"
+      CONTEXT="olymp"
+      ;;
     iris|core|visionai)
       export AZURE_STORAGE_ACCOUNT="${CONTEXT}iacstate"
       ;;
