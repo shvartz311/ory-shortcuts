@@ -1,25 +1,12 @@
 # vim:ft=zsh ts=2 sw=2 sts=2
 #
-# agnoster's Theme - https://gist.github.com/3712874
+# Inspired by agnoster's Theme - https://gist.github.com/3712874
 # A Powerline-inspired theme for ZSH
 #
 # # README
 #
 # In order for this theme to render correctly, you will need a
 # [Powerline-patched font](https://github.com/Lokaltog/powerline-fonts).
-# Make sure you have a recent version: the code points that Powerline
-# uses changed in 2012, and older versions will display incorrectly,
-# in confusing ways.
-#
-# In addition, I recommend the
-# [Solarized theme](https://github.com/altercation/solarized/) and, if you're
-# using it on Mac OS X, [iTerm 2](https://iterm2.com/) over Terminal.app -
-# it has significantly better color fidelity.
-#
-# If using with "light" variant of the Solarized color schema, set
-# SOLARIZED_THEME variable to "light". If you don't specify, we'll assume
-# you're using the "dark" variant.
-#
 # # Goals
 #
 # The aim of this theme is to only show you *relevant* information. Like most
@@ -28,6 +15,8 @@
 # hostname to whether the last call exited with an error to whether background
 # jobs are running in this shell will all be displayed automatically when
 # appropriate.
+
+zstyle ':completion:*:directory-stack' list-colors '=(#b) #([0-9]#)*( *)==95=38;5;12'
 
 ### Segment drawing
 # A few utility functions to make it easy and re-usable to draw segmented prompts
