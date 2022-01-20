@@ -21,6 +21,7 @@ sudo apt-get update
 # sudo apt-get install -y apt-transport-https && \
 # sudo apt-get update
 sudo apt-get install -y dotnet-sdk-5.0
+wget -qO- https://aka.ms/install-artifacts-credprovider.sh | bash
 
 # oh-my-zsh - https://ohmyz.sh/
 sudo apt-get install -y zsh
@@ -69,6 +70,9 @@ sudo apt install -y python3.8 python3-venv python3-pip
 
 # Ruby
 sudo apt-get install -y ruby-full
+
+# Improve Vim using Vundle
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Install markdown renderer
 gem install mdless

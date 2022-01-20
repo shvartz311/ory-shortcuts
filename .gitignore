@@ -2,3 +2,4 @@
 .kube/http-cache
 .vscode/settings.json
 .nuget/packages/
+.nuget/plugins/
