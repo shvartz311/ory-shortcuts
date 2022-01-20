@@ -1,3 +1,5 @@
+#! /usr/bin/zsh
+
 export PATH=$PATH:$HOME/.pulumi/bin
 source <(pulumi gen-completion zsh)
 
@@ -6,12 +8,14 @@ set_pulumi_context(){
   HELP=false
   LOCAL=false
   USE_PASSWORD=false
+  STACK=""
 
   while true; do
     case "$1" in
       --help | -h ) HELP=true; shift ;;
       -l | --local ) LOCAL=true; shift ;;
       -p | --password ) USE_PASSWORD=true; export PULUMI_CONFIG_PASSPHRASE=$2; shift 2 ;;
+      -s | --stack ) STACK=$2; shift 2 ;;
       -- ) shift; break ;;
       * ) CONTEXT=$1; break ;;
     esac
@@ -36,7 +40,7 @@ set_pulumi_context(){
     echo "When accessing pulumi backends stored in Azure storage accounts,"
     echo "ensure you are logged into Azure before running. If you aren't, this command will run \033[0;33maz login\033[0;37m."
     echo "This will set \033[0;32mPULUMI_CONFIG_PASSPHRASE\033[0;37m, \033[0;32mAZURE_STORAGE_ACCOUNT\033[0;37m, and \033[0;32mAZURE_STORAGE_KEY\033[0;37m"
-    echo "and then run \033[0;33mpulumi login --cloud-url\033[0;37m with the appropriate cloud url"
+    echo "and then run \033[0;33mpulumi login \033[0;34m--cloud-url\033[0;37m with the appropriate cloud url"
     echo
     echo "For a local pulumi backend, you should also specify a password. The local option automatically scans all parent directories for a pulumi backend folder"
     echo
@@ -52,6 +56,8 @@ set_pulumi_context(){
     show_help_text
     return
   fi
+
+  rm $HOME/.pulumi/workspaces/$(yq e '.name' Pulumi.yaml)-*-workspace.json(N) 2> /dev/null
 
   if [[ $LOCAL == 'true' ]]; then
     DIR=$(dirname $(readlink -f "$0") )
@@ -70,6 +76,11 @@ set_pulumi_context(){
     fi
 
     pulumi login "file://$DIR"
+
+    if [[ $STACK != "" ]]; then
+      pulumi stack select $STACK
+    fi
+
     return
   fi
 
@@ -117,4 +128,8 @@ set_pulumi_context(){
   echo "Using storage account: $AZURE_STORAGE_ACCOUNT"
   export AZURE_STORAGE_KEY=$(az storage account keys list --account-name="$AZURE_STORAGE_ACCOUNT" --subscription='35e7279c-24e1-45c4-87be-a76776a62875' --query='[0].value' -o tsv)
   pulumi login --cloud-url "azblob://pulumi-$CONTEXT-state"
+
+  if [[ $STACK != "" ]]; then
+    pulumi stack select $STACK
+  fi
 }
