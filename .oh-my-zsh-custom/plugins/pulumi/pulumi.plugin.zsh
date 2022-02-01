@@ -57,7 +57,7 @@ set_pulumi_context(){
     return
   fi
 
-  rm $HOME/.pulumi/workspaces/$(yq e '.name' Pulumi.yaml)-*-workspace.json(N) 2> /dev/null
+  #rm $HOME/.pulumi/workspaces/$(yq e '.name' Pulumi.yaml)-*-workspace.json(N) 2> /dev/null
 
   if [[ $LOCAL == 'true' ]]; then
     DIR=$(dirname $(readlink -f "$0") )
