@@ -30,10 +30,10 @@ _set_pulumi_context()
 {
   local -a contexts
 
-  _arguments  -A "-*" \
+  _arguments -A "-*" \
     '(--help -h --local -l)'{--local,-l}'[Recursively searches up directories for .pulumi/ backend. Password must be set manually with --password option]' \
     '(--help -h --password -p)'{--password,-p}'[Manually sets the password instead of pulling from cloud. When used with --local, it defaults to empty string]:password: ' \
-    '(--local -l --password -p --help -h)'{--help,-h}'[Display help text]:*:' \
-    '(--help -h)'{--stack,-s}"[Select a stack to point to]:stack:_values stack $(ls | grep 'Pulumi\..*\.yaml' | sed 's/Pulumi\.\(.*\)\.yaml/\1/g')" \
+    '(--help -h --local -l --password -p --stack -s)'{--help,-h}'[Display help text]:*:' \
+    '(--help -h --stack -s)'{--stack,-s}"[Select a stack to point to]:stack:_values stack $(ls | grep 'Pulumi\..*\.yaml' | sed 's/Pulumi\.\(.*\)\.yaml/\1/g')" \
     ":context:__get_pulumi_contexts"
 }
