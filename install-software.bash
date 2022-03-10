@@ -88,6 +88,12 @@ sudo mv yq_linux_amd64 /usr/bin/yq
 sudo sh ./install-man-page.sh
 rm install-man-page.sh yq.1
 
+# MongoDb Shell
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-mongosh
+
 sudo touch /etc/wsl.conf
 sudo bash -c 'cat > /etc/wsl.conf <<_EOF
 [automount]
