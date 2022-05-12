@@ -120,7 +120,7 @@ set_pulumi_context(){
     visionai-hub)
       export AZURE_STORAGE_ACCOUNT="visionaiiacstate"
       ;;
-    *) # iris|core|visionai|inventory|playlist and anything else new
+    *) # iris|core|visionai|inventory|playlist|exp and anything else new
       export AZURE_STORAGE_ACCOUNT="${CONTEXT}iacstate"
       ;;
   esac

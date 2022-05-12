@@ -19,6 +19,9 @@ chpwd() {
     "$HOME/git/cloud/Core.Deployment/src/Core.Deployment" ) set_pulumi_context core ;;
     "$HOME/git/cloud/Platform.Spoke/src/Tricentis.Platform.Spoke" ) set_pulumi_context legacy-spoke ;;
     "$HOME/git/cloud/IRIS.Deployment/src/Deployment" ) set_pulumi_context iris ;;
+    "$HOME/git/cloud/Inventory.Deployment/Inventory.Deployment.Spoke" ) set_pulumi_context inventory ;;
+    "$HOME/git/cloud/Traviata.PlaylistService.Deployment/Traviata.PlaylistService.Deployment.Spoke" ) set_pulumi_context playlist ;;
+    "$HOME/git/cloud/ExampleService.Infrastructure/ExampleService.Infrastructure.Spoke" ) set_pulumi_context exp ;;
     "$HOME/git/QAS-Labs/cloud-operations/iac-state/ananke" ) set_pulumi_context --password '' --local ;;
     * ) ;;
   esac
