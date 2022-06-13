@@ -17,6 +17,7 @@ chpwd() {
     "$HOME/git/cloud/Platform.Ananke/src/Spoke/Tricentis.Platform.Spoke" ) set_pulumi_context spoke ;;
     "$HOME/git/cloud/Dex2.Infrastructure/src/E2G.Deployment" ) set_pulumi_context e2g ;;
     "$HOME/git/cloud/Core.Deployment/src/Core.Deployment" ) set_pulumi_context core ;;
+    "$HOME/git/cloud/Core.Deployment/src/Core.Deployment.Global" ) set_pulumi_context core-global ;;
     "$HOME/git/cloud/Platform.Spoke/src/Tricentis.Platform.Spoke" ) set_pulumi_context legacy-spoke ;;
     "$HOME/git/cloud/IRIS.Deployment/src/Deployment" ) set_pulumi_context iris ;;
     "$HOME/git/cloud/Inventory.Deployment/Inventory.Deployment.Spoke" ) set_pulumi_context inventory ;;

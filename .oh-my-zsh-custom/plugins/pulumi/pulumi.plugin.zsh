@@ -120,6 +120,10 @@ set_pulumi_context(){
     visionai-hub)
       export AZURE_STORAGE_ACCOUNT="visionaiiacstate"
       ;;
+    core-global)
+      rm ~/.pulumi/workspaces/core-*-workspace.json
+      export AZURE_STORAGE_ACCOUNT="coreiacstate"
+      ;;
     *) # iris|core|visionai|inventory|playlist|exp and anything else new
       export AZURE_STORAGE_ACCOUNT="${CONTEXT}iacstate"
       ;;
