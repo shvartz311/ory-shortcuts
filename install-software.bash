@@ -1,5 +1,7 @@
 #!/bin/bash
 
+bash ./install.sh
+
 # kubectl setup
 sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg2
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -

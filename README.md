@@ -1,34 +1,26 @@
 # dotfiles
 
-If anyone wants to use this repo that is not me, please fork it and change `joshua` and `josno` everywhere to your own username.
+If anyone wants to use this repo that is not me, please fork it and change `joshua` and `Joshua` everywhere to your own username.
 Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place.
 **NEVER** Commit back sesitive information within any file such as `.ssh` or the `access-token` in `.kube/config`.
 
 ## Main setup plan
 
-1. Install WSL by running this in powershell as admin. It comes from [Official MS Docs](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+1. Install WSL by running this in powershell as admin. It comes from [Official MS Docs](https://learn.microsoft.com/en-us/windows/wsl/install)
 
    ```powershell
-   dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-   dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+   wsl --install
    ```
 
 1. In a non-admin powershell, run this command: `wsl --set-default-version 2`
+1. Restart computer
 1. Install these apps
-   - Windows Terminal
-   - Ubuntu
-     - If you prefer a different distro, either download from
-       [here](https://docs.microsoft.com/en-us/windows/wsl/install-manual)
-       or the Microsoft Store
-     - Alternatively, you can side-load any `.tar.gz` root file system with `wsl --import`. See test script for example.
-   - Windows Subsystem for Linux Update
-     ([Available here](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package))
+   - Windows Terminal and/or Windows Terminal Preview
    - Docker
 1. Open Ubuntu distro for the first time to set up username and password within distro. This is independent of Windows password but can be set the same.
    - To change your password later, run `passwd`.
 1. Copy windows Terminal settings that you desire from [here](./WindowsTerminalSettings.jsonc).
-1. Might still need to install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) for VS Code.
-   Docs say it is now included in Windows Terminal so you shouldn't need it there, but my experience was having to manually install it.
+1. Install [Cascadia Code](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code) so that we can use `Cascadia Code PL` font for the special characters.
 1. Configure docker to use WSL2 backend and support the newly set up distro
 1. Confirm docker is working with `docker ps`. If there are issues, close and reopen wsl and restart docker. That fixed my issues.
 1. Run powershell file: `./powershell/install-dotfiles-and-software.ps1`
