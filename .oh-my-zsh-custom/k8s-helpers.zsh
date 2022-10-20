@@ -43,15 +43,15 @@ get_all_aks_credentials(){
   done
 }
 
-get_cloud_aks_credentials(){
-
-  SUBS=(
-    'Cloud Operations'
-    'Tricentis Enterprise Cloud'
-    'Tricentis Enterprise Cloud Dev/Test'
-  )
-
-  for sub in $SUBS; do
-    _get_aks_credentials_in_sub $sub
-  done
-}
+# get_cloud_aks_credentials(){
+# 
+#   SUBS=(
+#     'Cloud Operations'
+#     'Tricentis Enterprise Cloud'
+#     'Tricentis Enterprise Cloud Dev/Test'
+#   )
+# 
+#   for sub in $SUBS; do
+#     _get_aks_credentials_in_sub $sub
+#   done
+# }
