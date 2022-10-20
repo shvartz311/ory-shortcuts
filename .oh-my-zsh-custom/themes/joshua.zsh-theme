@@ -236,6 +236,8 @@ prompt_kubecontext() {
 }
 
 prompt_pulumi() {
+  (( $+commands[pulumi] )) || return
+  
   if [[ -f Pulumi.yaml && ( -d .pulumi || "$PULUMI_CONFIG_PASSPHRASE" != '' ) ]]; then
     BACKEND=$(jq -r '.current' $HOME/.pulumi/credentials.json 2> /dev/null)
 

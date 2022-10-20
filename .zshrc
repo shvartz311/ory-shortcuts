@@ -75,13 +75,10 @@ plugins=(
   git
   git-auto-fetch
   kubectl
-  nvm
-  dotnet
-  npm
-  yarn
   ssh-agent
-  pulumi
   passwords
+  brew
+  terraform
 )
 
 source $ZSH/oh-my-zsh.sh

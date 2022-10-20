@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Exit immediately as this is a commit hook I used when at H&R Block but have not
+# updated for any company since we have not used a standardized commit message format.
 exit 0;
 
 COMMIT_MESSAGE=`cat $1`

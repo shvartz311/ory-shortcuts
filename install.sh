@@ -1,5 +1,7 @@
-#!/bin/bash
+#!/bin/zsh
 
+which greadlink > /dev/null 2> /dev/null && echo setting && alias readlink=greadlink && echo set || echo
+which readlink
 SCRIPTPATH=$(dirname $(readlink -f "$0") )
 
 FILES=(
@@ -12,8 +14,6 @@ FILES=(
   .tmux.conf
   .yarnrc
   .zshrc
-  vpn-fix.bash # Not a dotfile but we want the symlink here
-  un-vpn-fix.bash # Not a dotfile but we want the symlink here
 )
 
 for FILE in ${FILES[@]}; do
@@ -25,7 +25,7 @@ for FILE in ${FILES[@]}; do
     fi
 
     echo "Linking $SCRIPTPATH/$FILE to $HOME/$FILE"
-    ln -sf $SCRIPTPATH/$FILE ~/$FILE
+    ln -sfF $SCRIPTPATH/$FILE ~/$FILE
 
     fi
 done
@@ -40,4 +40,4 @@ chmod 600 $HOME/.npmrc
 chmod 600 $HOME/.yarnrc # Mine was 666, not sure why anyone else need to be able to read/write so changing to 600
 chmod 644 $HOME/.zshrc
 
-chmod +x /home/$USER/vpn-fix.bash
+unalias readlink 2>/dev/null

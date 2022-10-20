@@ -28,10 +28,22 @@ sudo apt-get install -y zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 # Enter password for changing default shell
 
-# I like mounting at /c instead of /mnt/c and this is part of that setup
-sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
-sudo mkdir /c
-sudo mount --bind /mnt/c /c
+if [[ "$(</proc/sys/kernel/osrelease)" == *microsoft* ]]; then
+    # I like mounting at /c instead of /mnt/c and this is part of that setup
+    sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /bin/mount" >> /etc/sudoers'
+    sudo mkdir /c
+    sudo mount --bind /mnt/c /c
+
+    sudo touch /etc/wsl.conf
+    sudo bash -c 'cat > /etc/wsl.conf <<_EOF
+    [automount]
+    options = "metadata,umask=22,fmask=11"
+    _EOF'
+
+    sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/vpn-fix.bash" >> /etc/sudoers'
+    sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/un-vpn-fix.bash" >> /etc/sudoers'
+
+fi
 
 # nvm (npm, Node.js, etc.) - https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2#install-nvm-nodejs-and-npm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
@@ -93,15 +105,6 @@ wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add 
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 sudo apt-get update
 sudo apt-get install -y mongodb-mongosh
-
-sudo touch /etc/wsl.conf
-sudo bash -c 'cat > /etc/wsl.conf <<_EOF
-[automount]
-options = "metadata,umask=22,fmask=11"
-_EOF'
-
-sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/vpn-fix.bash" >> /etc/sudoers'
-sudo sh -c 'echo "$SUDO_USER ALL=(root) NOPASSWD: /home/$SUDO_USER/un-vpn-fix.bash" >> /etc/sudoers'
 
 chsh -s /usr/bin/zsh
 exec zsh -l

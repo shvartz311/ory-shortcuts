@@ -1,12 +1,6 @@
-if [[ "$PWD" = "/c/Windows/System32" ]]; then
-  cd ~
-fi
-
-if [[ "$PWD" = "/mnt/c/Windows/System32" ]]; then
-  cd ~
-fi
-
-export PATH=$PATH:$HOME/.local/bin
+path+=('.local/bin/')
+path+=('/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/')
+export PATH
 
 # This is an altered version of git_main_branch
 git_remote_branch() {

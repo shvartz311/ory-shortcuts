@@ -1,10 +1,28 @@
 # dotfiles
 
-If anyone wants to use this repo that is not me, please fork it and change `joshua` and `josno` everywhere to your own username.
+If anyone wants to use this repo that is not me, please fork it and change `joshua` and `joshuanovak` everywhere to your own username.
 Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place.
 **NEVER** Commit back sesitive information within any file such as `.ssh` or the `access-token` in `.kube/config`.
 
-## Main setup plan
+## Mac Setup instructions
+
+The tools installed for Mac are not the same as those currently configured for Linux/WSL on Windows.
+This is because my only use-case for Mac is my company laptop at Hunters so I am only installing tools I may need there.
+
+1. `zsh install-software-mac.sh`
+1. `zsh install.sh`
+1. Set iTerm2 Font: `https://iterm2.com/documentation-fonts.html`. Either choose a Powerline font or enable the built-in powerline characters. 
+1. In iTerm2, import the preset colors from `One Half Dark - Joshua.itermcolors`
+1. Close the terminal and open iTerm2.
+
+## Debian/Ubuntu Setup instructions
+
+1. `bash install-software.bash`
+1. `zsh install.sh`
+1. Close and re-open terminal
+1. Done! :)
+
+## Main setup plan for WSL on Windows
 
 1. Install WSL by running this in powershell as admin. It comes from [Official MS Docs](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 
@@ -47,7 +65,7 @@ Also, be sure to change to gitconfig to your own git config, but leave the `cred
    }
    ```
 
-## Manual instructions for configuring dotfiles
+## Manual instructions for configuring dotfiles on WSL on Windows
 
 If the powershell script above (`./powershell/install-dotfiles-and-software.ps1`) fails, these steps are the manual equivalent
 
@@ -66,7 +84,7 @@ If the powershell script above (`./powershell/install-dotfiles-and-software.ps1`
      git clone https://github.com/jnovick/dotfiles.git
      ```
 
-2. Install dotfiles
+1. Install dotfiles
 
    - This can be re-run many times safely to link new files added to repo
    - If the dotfiles already exist, the script will rename them with `.<Date-Time>.bak` appended to the end
@@ -79,7 +97,7 @@ If the powershell script above (`./powershell/install-dotfiles-and-software.ps1`
    bash install.sh
    ```
 
-3. Install desired software
+1. Install desired software
    - This will prompt you for your password up to two times and switch default shell to zsh
    - This is not safe to re-run. Manually re-run pieces for updates, but not the whole thing.
 
