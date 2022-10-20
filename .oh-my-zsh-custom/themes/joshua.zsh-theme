@@ -231,11 +231,13 @@ prompt_status() {
 }
 
 prompt_kubecontext() {
-    (( $+commands[kubectl] )) || return
+    (( $+commands[kubectl] )) && kubectl config current-context > /dev/null 2> /dev/null || return
     prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context)"`
 }
 
 prompt_pulumi() {
+  (( $+commands[pulumi] )) || return
+
   if [[ -f Pulumi.yaml && ( -d .pulumi || "$PULUMI_CONFIG_PASSPHRASE" != '' ) ]]; then
     BACKEND=$(jq -r '.current' $HOME/.pulumi/credentials.json 2> /dev/null)
 
