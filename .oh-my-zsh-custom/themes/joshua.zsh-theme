@@ -319,6 +319,12 @@ fill-line() {
   fi
 }
 
+prompt_iterm2() {
+  if [[ $(uname) == "Darwin" ]]; then
+    echo "%{$(iterm2_prompt_mark)%}"
+  fi
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -329,9 +335,10 @@ build_prompt() {
   prompt_git
   prompt_kubecontext
   prompt_pulumi
+  tf_prompt_info
   prompt_cmd_exec_time
   prompt_end
 }
 
-PROMPT='$NEWLINE$(fill-line "$(build_prompt)" "$(rprompt_git_main)")$NEWLINE$PROMPTCHAR '
+PROMPT='$NEWLINE$(fill-line "$(build_prompt)" "$(rprompt_git_main)")$NEWLINE$(prompt_iterm2)$PROMPTCHAR '
 RPROMPT='$(rprompt_git_tracking)'

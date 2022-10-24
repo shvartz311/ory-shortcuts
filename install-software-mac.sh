@@ -25,8 +25,8 @@ brew install pipenv
 
 curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
 installer -pkg AWSCLIV2.pkg \
-    -target CurrentUserHomeDirectory \
-    -applyChoiceChangesXML $HOME/dotfiles/aws-choices.xml
+  -target CurrentUserHomeDirectory \
+  -applyChoiceChangesXML $HOME/dotfiles/aws-choices.xml
 
 sudo ln -s $HOME/aws-cli/aws /usr/local/bin/aws
 sudo ln -s $HOME/aws-cli/aws_completer /usr/local/bin/aws_completer
@@ -43,3 +43,7 @@ cd fonts
 ./install.sh
 cd ..
 rm -rf fonts
+
+# iTerm2 integration: https://iterm2.com/documentation-shell-integration.html
+curl -L https://iterm2.com/shell_integration/zsh \
+  -o ~/.iterm2_shell_integration.zsh
