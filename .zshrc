@@ -79,6 +79,7 @@ plugins=(
   passwords
   brew
   terraform
+  aws
 )
 
 source $ZSH/oh-my-zsh.sh

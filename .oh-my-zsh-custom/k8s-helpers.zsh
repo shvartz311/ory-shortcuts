@@ -43,6 +43,16 @@ get_all_aks_credentials(){
   done
 }
 
+get_all_eks_credentials(){
+  for profile in $(aws_profiles); do
+    for region in $(aws ec2 describe-regions --output text | cut -f4); do
+      for cluster in $(aws eks list-clusters --region $region --profile $profile | jq '.clusters[]' -r); do
+        aws eks update-kubeconfig --name $cluster --region $region --profile $profile --alias "$profile-$region-$cluster"
+      done
+    done
+  done
+}
+
 # get_cloud_aks_credentials(){
 # 
 #   SUBS=(

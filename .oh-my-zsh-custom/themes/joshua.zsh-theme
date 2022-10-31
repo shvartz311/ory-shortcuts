@@ -232,7 +232,13 @@ prompt_status() {
 
 prompt_kubecontext() {
     (( $+commands[kubectl] )) && kubectl config current-context > /dev/null 2> /dev/null || return
-    prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context)"`
+    local ns=$(kubectl config view --minify -o jsonpath='{..namespace}')
+
+    if [[ -z $ns || $ns == "default" ]]; then
+      prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context)"`
+    else
+      prompt_segment cyan black `printf "\u2388\u00A0$(kubectl config current-context):$ns"`
+    fi
 }
 
 prompt_pulumi() {
@@ -319,6 +325,11 @@ fill-line() {
   fi
 }
 
+prompt_aws_profile() {
+  (( $+commands[aws] )) && [[ ! -z AWS_PROFILE ]] || return
+  prompt_segment 208 black `printf "\uf270\u00A0$AWS_PROFILE:$(aws configure get region)"`
+}
+
 prompt_iterm2() {
   if [[ $(uname) == "Darwin" ]]; then
     echo "%{$(iterm2_prompt_mark)%}"
@@ -333,9 +344,10 @@ build_prompt() {
   prompt_context
   prompt_dir
   prompt_git
+  prompt_aws_profile
   prompt_kubecontext
   prompt_pulumi
-  tf_prompt_info
+#  tf_prompt_info
   prompt_cmd_exec_time
   prompt_end
 }

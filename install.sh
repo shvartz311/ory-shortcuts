@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-which greadlink > /dev/null 2> /dev/null && echo setting && alias readlink=greadlink && echo set || echo
+which greadlink > /dev/null 2> /dev/null && alias readlink=greadlink || echo
 which readlink
 SCRIPTPATH=$(dirname $(readlink -f "$0") )
 
@@ -14,6 +14,8 @@ FILES=(
   .tmux.conf
   .yarnrc
   .zshrc
+  .vimrc
+  .aws
 )
 
 for FILE in ${FILES[@]}; do
@@ -33,11 +35,12 @@ done
 chmod -R 600 $HOME/.kube/config
 # chmod -R 777 $HOME/.nuget
 # chmod -R 666 $HOME/.nuget/NuGet/NuGet.Config
-chmod 700 -R $HOME/.git-scripts
+chmod -R 700 $HOME/.git-scripts/
 # chmod -R 666 $HOME/.gitconfig
 chmod 600 $HOME/.npmrc
 # chmod -R 666 $HOME/.tmux.conf
 chmod 600 $HOME/.yarnrc # Mine was 666, not sure why anyone else need to be able to read/write so changing to 600
 chmod 644 $HOME/.zshrc
 
-unalias readlink 2>/dev/null
+unalias readlink
+echo alias removed
