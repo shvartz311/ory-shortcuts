@@ -1,4 +1,5 @@
 alias pip='pip3'
 # alias code='code-insiders'
 alias dotfiles='code ~/dotfiles/'
+alias jira='open "https://cyberhunter.atlassian.net/browse/`git rev-parse --abbrev-ref HEAD`"'
 alias awsr='aws configure set region'

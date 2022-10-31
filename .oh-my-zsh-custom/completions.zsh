@@ -7,4 +7,5 @@ then
     source <(kubectl completion zsh) # Not sure why kubectl plugin is not already doing this for me
     complete -F __start_kubectl decode
     complete -F __start_kubectl kn
+    complete -F __start_kubectl ksn
 fi

@@ -14,6 +14,8 @@ This is because my only use-case for Mac is my company laptop at Hunters so I am
 1. Set iTerm2 Font: `https://iterm2.com/documentation-fonts.html`. Either choose a Powerline font or enable the built-in powerline characters.
 1. In iTerm2, import the preset colors from `One Half Dark - Joshua.itermcolors`
 1. Close the terminal and open iTerm2.
+1. Set font in VS Code by adding it to the beginning of the list. For example:
+   `"editor.fontFamily": "Hack Nerd Font Mono, DejaVu Sans Mono for Powerline, Menlo, Monaco, 'Courier New', monospace"`
 
 ## Debian/Ubuntu Setup instructions
 

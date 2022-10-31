@@ -6,7 +6,8 @@
 	"recommendations": [
 		"editorconfig.editorconfig",
 		"davidanson.vscode-markdownlint",
-		"ms-vscode-remote.vscode-remote-extensionpack"
+		"ms-vscode-remote.vscode-remote-extensionpack",
+    "eamodio.gitlens"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

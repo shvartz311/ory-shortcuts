@@ -17,15 +17,14 @@ git_remote_branch() {
   echo master
 }
 
-# pr() {
-#   local URL="https://tricentis.visualstudio.com/"
-#   URL="$URL$(pwd | sed "s|$HOME\/git\/\([^/]*\).*|\1|g")/_git/"
-#   URL="$URL$(pwd | sed "s|$HOME/git/[^/]*/\([^/]*\)/.*|\1|g")/"
-#   URL="${URL}pullrequestcreate?sourceRef=$(git rev-parse --abbrev-ref HEAD)&"
-#   URL="${URL}targetRef=$(git_remote_branch)"
-# 
-#   echo $URL
-# }
+pr() {
+  local URL="https://github.com/hunters-ai/"
+  URL="$URL$(pwd | sed "s|$HOME\/git\/\([^/]*\).*|\1|g")"
+  URL="$URL/pull/new/"
+  URL="$URL$(git rev-parse --abbrev-ref HEAD)"
+
+  open $URL
+}
 
 print_powerline_characters(){
   for c4 in {0..9} {a..f}; do

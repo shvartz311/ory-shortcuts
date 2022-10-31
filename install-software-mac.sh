@@ -12,6 +12,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 brew install tmux
 brew install jq
 brew install yq
+brew install watch
 
 # Install Kubernetes, Docker, and Helm
 brew install kubectl

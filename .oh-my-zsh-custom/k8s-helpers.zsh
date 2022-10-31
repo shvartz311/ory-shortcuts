@@ -27,6 +27,7 @@ generate_crd_role(){
 }
 
 alias kn='kubectl -n'
+alias ksn='kubectl config set-context --current --namespace'
 
 _get_aks_credentials_in_sub(){
   for id in $(az aks list --subscription $1 --query='[*].id' -o tsv); do
@@ -54,13 +55,13 @@ get_all_eks_credentials(){
 }
 
 # get_cloud_aks_credentials(){
-# 
+#
 #   SUBS=(
 #     'Cloud Operations'
 #     'Tricentis Enterprise Cloud'
 #     'Tricentis Enterprise Cloud Dev/Test'
 #   )
-# 
+#
 #   for sub in $SUBS; do
 #     _get_aks_credentials_in_sub $sub
 #   done
