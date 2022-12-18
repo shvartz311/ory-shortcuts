@@ -35,8 +35,9 @@ sudo ln -s $HOME/aws-cli/aws_completer /usr/local/bin/aws_completer
 which aws
 aws --version
 
-brew tap hashicorp/tap
-brew install hashicorp/tap/terraform
+#brew tap hashicorp/tap
+#brew install hashicorp/tap/terraform
+brew install tfenv
 
 # Configure powerline fonts
 git clone https://github.com/powerline/fonts.git --depth=1
@@ -48,3 +49,21 @@ rm -rf fonts
 # iTerm2 integration: https://iterm2.com/documentation-shell-integration.html
 curl -L https://iterm2.com/shell_integration/zsh \
   -o ~/.iterm2_shell_integration.zsh
+
+# Custom operator tooling
+brew install operator-sdk
+
+brew install argocd
+
+# GNU tools
+brew install gsed
+brew install coreutils
+
+# Prometheus tools (promtool and promruval)
+brew install prometheus
+export PATH="${HOME}/.local/bin:$PATH"
+VERSION=$(curl -Ls https://api.github.com/repos/FUSAKLA/promruval/releases/latest | jq ".tag_name" | xargs | cut -c2-)                                                                                                                                        origin/RND-6897
+echo "https://github.com/FUSAKLA/promruval/releases/download/v${VERSION}/promruval_${VERSION}_linux_386.tar.gz"
+wget -qO- "https://github.com/FUSAKLA/promruval/releases/download/v${VERSION}/promruval_${VERSION}_linux_386.tar.gz" \
+  | tar xvzf - promruval
+mv promruval "${HOME}/.local/bin"/promruval
