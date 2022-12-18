@@ -1,4 +1,4 @@
-path+=('.local/bin/')
+path+=("$HOME/.local/bin/")
 path+=('/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/')
 export PATH
 
@@ -21,7 +21,7 @@ pr() {
   local URL="https://github.com/hunters-ai/"
   URL="$URL$(pwd | sed "s|$HOME\/git\/\([^/]*\).*|\1|g")"
   URL="$URL/pull/new/"
-  URL="$URL$(git rev-parse --abbrev-ref HEAD)"
+  URL="$URL$(git rev-parse --abbrev-ref HEAD | sed 's;.*/\(.*\);\1;')"
 
   open $URL
 }

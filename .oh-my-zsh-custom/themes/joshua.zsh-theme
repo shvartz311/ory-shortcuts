@@ -327,7 +327,7 @@ fill-line() {
 
 prompt_aws_profile() {
   (( $+commands[aws] )) && [[ ! -z AWS_PROFILE ]] || return
-  prompt_segment 208 black `printf "\uf270\u00A0$AWS_PROFILE:$(aws configure get region)"`
+  prompt_segment 208 black `printf "\uf270\u00A0${AWS_PROFILE:-$AWS_DEFAULT_PROFILE}:$(aws configure get region)"`
 }
 
 prompt_iterm2() {

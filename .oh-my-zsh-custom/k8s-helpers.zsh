@@ -54,6 +54,12 @@ get_all_eks_credentials(){
   done
 }
 
+copy_s3_to_self(){
+  for object in $(aws s3api list-objects --bucket text-content --query 'Contents[].{Key: Key, Size: Size}'); do
+     aws s3 cp s3://awsexamplebucket/ s3://awsexamplebucket/ --sse aws:kms --recursive
+  done
+}
+
 # get_cloud_aks_credentials(){
 #
 #   SUBS=(
@@ -66,3 +72,19 @@ get_all_eks_credentials(){
 #     _get_aks_credentials_in_sub $sub
 #   done
 # }
+
+drain_all_nodes(){
+  for node in $(kubectl get pod -o jsonpath='{range .items[*]}{.spec.nodeName}{"\n"}{end}' | sort | uniq); do
+    echo "Node: $node"
+    instance=$(aws ec2 describe-instances --filters "Name=private-dns-name,Values=$node" | jq -r '.Reservations[0].Instances[0].InstanceId')
+    echo "Instance: $instance"
+    for asg in $(aws autoscaling describe-auto-scaling-instances --instance-ids "$instance" | jq -r '.AutoScalingInstances[] | .AutoScalingGroupName'); do
+      echo "ASG: $asg"
+      aws autoscaling detach-instances --instance-ids "$instance" --auto-scaling-group-name "$asg" --no-should-decrement-desired-capacity
+      sleep 60
+      kubectl drain $node --ignore-daemonsets --delete-emptydir-data && \
+      kubectl delete node $node && \
+      aws ec2 terminate-instances --instance-ids $instance
+    done
+  done
+}

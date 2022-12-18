@@ -36,17 +36,17 @@ print_status () {
     printf "\e[39m%-27s" $1
 
     if [[ $ahead -gt 0 ]]; then
-        printf "\e[32m%4d ahead\e[39   " $ahead
+        printf "\e[32m%4d ahead\e[39~   " $ahead
     else
         if [[ $behind -eq 0 ]]; then
-            printf "\e[94m       Up to date\e[39"
+            printf "\e[94m       Up to date\e[39~"
         else
-            printf "\e[39m          \e[39"
+            printf "\e[39m          \e[39~"
         fi
     fi
 
     if [[ $behind -gt 0 ]]; then
-        printf "\e[31m%4d behind\e[39" $behind
+        printf "\e[31m%4d behind\e[39~" $behind
     fi
 
     echo
@@ -59,7 +59,7 @@ if [[ $(git rev-parse --quiet --verify $remote_main_branch | awk '{print length}
 fi
 
 if [[ $(git rev-parse --quiet --verify $BRANCH | awk '{print length}') -eq 0 ]]; then
-    printf "\e[31mNo remote tracking branch\e[39" ""
+    printf "\e[31mNo remote tracking branch\e[39~" ""
     echo
 elif [[ $BRANCH != $remote_main_branch ]]; then
     print_status $BRANCH
