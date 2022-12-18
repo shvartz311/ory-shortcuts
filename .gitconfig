@@ -22,3 +22,5 @@
     track = "!f() { git config branch.$1.remote origin && git config branch.$1.merge refs/heads/$1 }; f"
 [push]
 	default = current
+[pull]
+	rebase = false
