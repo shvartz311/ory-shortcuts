@@ -48,7 +48,22 @@ get_all_eks_credentials(){
   for profile in $(aws_profiles); do
     for region in $(aws ec2 describe-regions --output text | cut -f4); do
       for cluster in $(aws eks list-clusters --region $region --profile $profile | jq '.clusters[]' -r); do
-        aws eks update-kubeconfig --name $cluster --region $region --profile $profile --alias "$profile-$region-$cluster"
+        aws eks update-kubeconfig --name $cluster --region $region --profile $profile
+
+        arn=$(aws eks describe-cluster --name $cluster --region $region --profile $profile | jq -r '.cluster.arn')
+
+        kubectl config set-credentials "${profile}_${region}_${cluster}" \
+          --exec-env AWS_PROFILE=$profile \
+          --exec-env AWS_REGION=$region \
+          --exec-env CLUSTER_NAME=$cluster \
+          --exec-command sh \
+          --exec-arg '-c' \
+          --exec-api-version='client.authentication.k8s.io/v1beta1' \
+          --exec-arg='aws --region $AWS_REGION eks get-token --cluster-name $CLUSTER_NAME 2> /dev/null || ( aws sso login > /dev/null && aws --region $AWS_REGION eks get-token --cluster-name $CLUSTER_NAME 2> /dev/null )'
+
+        kubectl config set-context "${profile}_${region}_${cluster}" --cluster=$arn --user="${profile}_${region}_${cluster}"
+        kubectl config delete-user $arn || echo --- User $arn already removed
+        kubectl config delete-context $arn || echo --- Context $arn already removed
       done
     done
   done
