@@ -103,3 +103,10 @@ drain_all_nodes(){
     done
   done
 }
+
+restart_pods_in_namespace(){                                                                                                                                                                        origin/RND-6777
+  [[ "$#" -ne 1 ]] && echo "Exactly one argument (namespace) expected. $# were provided" && return 1
+  kubectl get statefulsets --no-headers -n $1 2> /dev/null | cut -d ' ' -f 1 | xargs -I {} kubectl rollout restart statefulsets/{}
+  kubectl get deployments --no-headers -n $1 2> /dev/null | cut -d ' ' -f 1 | xargs -I {} kubectl rollout restart deployments/{}
+  kubectl get daemonsets --no-headers -n $1 2> /dev/null | cut -d ' ' -f 1 | xargs -I {} kubectl rollout restart daemonsets/{}
+}
