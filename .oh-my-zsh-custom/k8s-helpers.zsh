@@ -16,14 +16,28 @@ resetk8s(){
   done
 }
 
+_containes_all_namespaces_flag(){
+  return $( [[ "$@" == "-A "* || "$@" == *" -A" || "$@" == *" -A "* || "$@" == "-A" || "$@" == "--all-namespaces "* || "$@" == *" --all-namespaces" || "$@" == *" --all-namespaces "* || "$@" == "--all-namespaces" ]] )
+}
+
 get_pod_last_state(){
+  if _containes_all_namespaces_flag $@; then
+    HEADERS="\"NAMESPACE\tPOD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\n\""
+    NAMES='{{- printf "%s\t%s\t%s\t" $pod.metadata.namespace $pod.metadata.name .name}}'
+    EXTRA_NAMES='{{- printf " \t \t%s\t" .name }}'
+  else;
+    HEADERS="\"POD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\n\""
+    NAMES='{{- printf "%s\t%s\t" $pod.metadata.name .name}}'
+    EXTRA_NAMES='{{- printf " \t%s\t" .name }}'
+  fi
+
   lastStateTemplate='
     {{- $pod := .}}
     {{- range $i, $r :=.status.containerStatuses}}
       {{- if eq $i 0 }}
-        {{- printf "%s\t%s\t" $pod.metadata.name .name}}
+        '$NAMES'
       {{- else }}
-        {{- printf " \t%s\t" .name }}
+        '$EXTRA_NAMES'
       {{- end }}
       {{- if .lastState.running }}
         {{- "Running\n" }}
@@ -35,17 +49,27 @@ get_pod_last_state(){
         {{- "\n"}}
       {{- end}}
     {{- end}}'
-  kubectl get pod $@ -o go-template="{{- \"POD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\n\"}}{{if .items}}{{range .items}}$lastStateTemplate{{\"\n\"}}{{end}}{{else}}$lastStateTemplate{{end}}" | column -t -s $'\t'
+  kubectl get pod $@ -o go-template="{{- $HEADERS }}{{if .items}}{{range .items}}$lastStateTemplate{{\"\n\"}}{{end}}{{else}}$lastStateTemplate{{end}}" | column -t -s $'\t'
 }
 
 get_pod_current_and_last_state(){
+  if _containes_all_namespaces_flag $@; then
+    HEADERS="\"NAMESPACE\tPOD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\""
+    NAMES='{{- printf "%s\t%s\t%s\t" $pod.metadata.namespace $pod.metadata.name .name}}'
+    EXTRA_NAMES='{{- printf " \t \t%s\t" .name }}'
+  else;
+    HEADERS="\"POD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\""
+    NAMES='{{- printf "%s\t%s\t" $pod.metadata.name .name}}'
+    EXTRA_NAMES='{{- printf " \t%s\t" .name }}'
+  fi
+
   template='
     {{- $pod := .}}
     {{- range $i, $r :=.status.containerStatuses}}
       {{- if eq $i 0 }}
-        {{- printf "%s\t%s\t" $pod.metadata.name .name}}
+        '$NAMES'
       {{- else }}
-        {{- printf " \t%s\t" .name }}
+        '$EXTRA_NAMES'
       {{- end }}
       {{- if .lastState.running }}
         {{- "Running\n" }}
@@ -70,17 +94,27 @@ get_pod_current_and_last_state(){
         {{"\n"}}
       {{- end}}
     {{- end}}'
-  kubectl get pod $@ -o go-template="{{- \"POD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\"}}{{if .items}}{{range .items}}$template{{\"\n\"}}{{end}}{{else}}$template{{end}}" | column -t -s $'\t'
+  kubectl get pod $@ -o go-template="{{- $HEADERS }}{{if .items}}{{range .items}}$template{{\"\n\"}}{{end}}{{else}}$template{{end}}" | column -t -s $'\t'
 }
 
 get_pod_state(){
+  if _containes_all_namespaces_flag $@; then
+    HEADERS="\"NAMESPACE\tPOD NAME\tCONTAINER NAME\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\""
+    NAMES='{{- printf "%s\t%s\t%s\t" $pod.metadata.namespace $pod.metadata.name .name}}'
+    EXTRA_NAMES='{{- printf " \t \t%s\t" .name }}'
+  else;
+    HEADERS="\"POD NAME\tCONTAINER NAME\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\""
+    NAMES='{{- printf "%s\t%s\t" $pod.metadata.name .name}}'
+    EXTRA_NAMES='{{- printf " \t%s\t" .name }}'
+  fi
+
   stateTemplate='
     {{- $pod := .}}
     {{- range $i, $r :=.status.containerStatuses}}
       {{- if eq $i 0 }}
-        {{- printf "%s\t%s\t" $pod.metadata.name .name}}
+        '$NAMES'
       {{- else }}
-        {{- printf " \t%s\t" .name }}
+        '$EXTRA_NAMES'
       {{- end }}
       {{- if .state.running }}
         {{- "Running\n" }}
@@ -96,7 +130,7 @@ get_pod_state(){
         {{"\n"}}
       {{- end}}
     {{- end}}'
-  kubectl get pod $@ -o go-template="{{- \"POD NAME\tCONTAINER NAME\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\"}}{{if .items}}{{range .items}}$stateTemplate{{\"\n\"}}{{end}}{{else}}$stateTemplate{{end}}" | column -t -s $'\t'
+  kubectl get pod $@ -o go-template="{{- $HEADERS }}{{if .items}}{{range .items}}$stateTemplate{{\"\n\"}}{{end}}{{else}}$stateTemplate{{end}}" | column -t -s $'\t'
 }
 
 generate_crd_role(){
