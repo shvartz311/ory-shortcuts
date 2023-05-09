@@ -16,6 +16,89 @@ resetk8s(){
   done
 }
 
+get_pod_last_state(){
+  lastStateTemplate='
+    {{- $pod := .}}
+    {{- range $i, $r :=.status.containerStatuses}}
+      {{- if eq $i 0 }}
+        {{- printf "%s\t%s\t" $pod.metadata.name .name}}
+      {{- else }}
+        {{- printf " \t%s\t" .name }}
+      {{- end }}
+      {{- if .lastState.running }}
+        {{- "Running\n" }}
+      {{- else if .lastState.terminated }}
+        {{- printf "%s\t%s\n" "Terminated" .lastState.terminated.reason}}
+      {{- else if .lastState.waiting }}
+        {{- printf "%s\t%s\n" "Waiting" .lastState.waiting.reason}}
+      {{- else }}
+        {{- "\n"}}
+      {{- end}}
+    {{- end}}'
+  kubectl get pod $@ -o go-template="{{- \"POD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\n\"}}{{if .items}}{{range .items}}$lastStateTemplate{{\"\n\"}}{{end}}{{else}}$lastStateTemplate{{end}}" | column -t -s $'\t'
+}
+
+get_pod_current_and_last_state(){
+  template='
+    {{- $pod := .}}
+    {{- range $i, $r :=.status.containerStatuses}}
+      {{- if eq $i 0 }}
+        {{- printf "%s\t%s\t" $pod.metadata.name .name}}
+      {{- else }}
+        {{- printf " \t%s\t" .name }}
+      {{- end }}
+      {{- if .lastState.running }}
+        {{- "Running\n" }}
+      {{- else if .lastState.terminated }}
+        {{- printf "%s\t%s\n" "Terminated" .lastState.terminated.reason}}
+      {{- else if .lastState.waiting }}
+        {{- printf "%s\t%s\n" "Waiting" .lastState.waiting.reason}}
+      {{- else }}
+        {{- "\t"}}
+      {{- end}}
+      {{- if .state.running }}
+        {{- "Running\n" }}
+      {{- else if .state.terminated }}
+        {{- if .state.terminated.message }}
+          {{- printf "%s\t%s\t%s\n" "Terminated" .state.terminated.reason .state.terminated.message}}
+        {{- else }}
+          {{- printf "%s\t%s\t%s%d\n" "Terminated" .state.terminated.reason "Exit Code: " .state.terminated.exitCode}}
+        {{- end }}
+      {{- else if .state.waiting }}
+        {{- printf "%s\t%s\t%s\n" "Waiting" .state.waiting.reason .state.waiting.message}}
+      {{- else }}
+        {{"\n"}}
+      {{- end}}
+    {{- end}}'
+  kubectl get pod $@ -o go-template="{{- \"POD NAME\tCONTAINER NAME\tLAST STATE\tLAST STATE REASON\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\"}}{{if .items}}{{range .items}}$template{{\"\n\"}}{{end}}{{else}}$template{{end}}" | column -t -s $'\t'
+}
+
+get_pod_state(){
+  stateTemplate='
+    {{- $pod := .}}
+    {{- range $i, $r :=.status.containerStatuses}}
+      {{- if eq $i 0 }}
+        {{- printf "%s\t%s\t" $pod.metadata.name .name}}
+      {{- else }}
+        {{- printf " \t%s\t" .name }}
+      {{- end }}
+      {{- if .state.running }}
+        {{- "Running\n" }}
+      {{- else if .state.terminated }}
+        {{- if .state.terminated.message }}
+          {{- printf "%s\t%s\t%s\n" "Terminated" .state.terminated.reason .state.terminated.message}}
+        {{- else }}
+          {{- printf "%s\t%s\t%s%d\n" "Terminated" .state.terminated.reason "Exit Code: " .state.terminated.exitCode}}
+        {{- end }}
+      {{- else if .state.waiting }}
+        {{- printf "%s\t%s\t%s\n" "Waiting" .state.waiting.reason .state.waiting.message}}
+      {{- else }}
+        {{"\n"}}
+      {{- end}}
+    {{- end}}'
+  kubectl get pod $@ -o go-template="{{- \"POD NAME\tCONTAINER NAME\tSTATE\tSTATE REASON\tSTATE MESSAGE\n\"}}{{if .items}}{{range .items}}$stateTemplate{{\"\n\"}}{{end}}{{else}}$stateTemplate{{end}}" | column -t -s $'\t'
+}
+
 generate_crd_role(){
   CRD=`kubectl get crd -o jsonpath='{range .items[*]}{.metadata.name}{","}{end}' | sed 's/,*$//g'`
 
