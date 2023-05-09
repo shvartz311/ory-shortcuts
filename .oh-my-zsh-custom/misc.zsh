@@ -1,5 +1,7 @@
 path+=("$HOME/.local/bin/")
 path+=('/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/')
+path+=("${KREW_ROOT:-$HOME/.krew}/bin")
+path+=("/opt/homebrew/opt/gnu-getopt/bin")
 export PATH
 
 # This is an altered version of git_main_branch
