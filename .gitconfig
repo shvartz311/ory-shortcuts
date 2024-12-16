@@ -1,11 +1,11 @@
 [core]
     editor = vim
-    excludesfile = /Users/joshuanovak/.gitignore
+    excludesfile = /Users/ory.shvartz/.gitignore
     autocrlf = input
     hooksPath = ~/.git-scripts/hooks
 [user]
-    name = Joshua Novick
-    email = joshua.novick@hunters.ai
+    name = Ory Shvartz
+    email = ory.shvartz@hunters.ai
 [alias]
     cleanup = !git fetch origin --prune && git branch --merged origin/master | grep -v 'master$' | xargs git branch -d
     changelog = !~/.git-scripts/gitChangelog.sh
@@ -13,7 +13,7 @@
     start = !~/.git-scripts/gitStart.sh
     redo = !git commit -a --amend -C HEAD && git push --force-with-lease
     repull = !git fetch && git branch "$(git rev-parse --abbrev-ref HEAD)_BACKUP_$(date +"%Y_%m_%d_%I_%M_%p")" && git reset --hard $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
-    go = !cd /Users/joshuanovak/git/
+    go = !cd /Users/ory.shvartz/git/
     compare = "!f() { \
         OTHER=${2:-$(git symbolic-ref -q HEAD --short)}; \
         git rev-list \"$1\"...\"$2\" --count --left-right | awk -v A=\"$1\" -v B=\"$OTHER\" '{print A,\"is\",\"\\033[32m\"$1\"\\033[39m\",\"commits ahead of\",B,\"and\",\"\\033[31m\"$2\"\\033[39m\",\"behind\"}'; \

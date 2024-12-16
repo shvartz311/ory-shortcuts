@@ -1,6 +1,6 @@
 #! /bin/zsh
 
-##temp=/Users/joshuanovak/generated-templates
+##temp=/Users/ory.shvartz/generated-templates
 #temp=$(mktemp -d -t generated_prometheus_rules)
 #
 #rm -f error.log

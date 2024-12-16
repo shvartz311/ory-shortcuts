@@ -12,14 +12,14 @@ alias awsr='aws configure set region'
 
 clone(){
   git clone git@github.com:hunters-ai/$1.git
-  # git clone $( echo $PWD | sed "s;/Users/joshuanovak/git/\(.*\);git@github.com:hunters-ai/\1.git;" )/$1 && cd $1;
+  # git clone $( echo $PWD | sed "s;/Users/ory.shvartz/git/\(.*\);git@github.com:hunters-ai/\1.git;" )/$1 && cd $1;
 }
 
 cd()
 {
   if [[ -d $1 || $1 == -* || $1 == +* || -z $1 ]]; then
     builtin cd "$@" 2> >(sed 's/cd:[0-9]\+://')
-  elif [[ $PWD == '/Users/joshuanovak/git/'* ]]; then
+  elif [[ $PWD == '/Users/ory.shvartz/git/'* ]]; then
     clone $1 1>&1 2> /dev/null || builtin cd "$@" 2> >(sed 's/cd:[0-9]\+://')
   else
     builtin cd "$@" 2> >(sed 's/cd:[0-9]\+://')

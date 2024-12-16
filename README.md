@@ -1,6 +1,6 @@
 # dotfiles
 
-If anyone wants to use this repo that is not me, please fork it and change `joshua` and `Joshua` everywhere to your own username.
+If anyone wants to use this repo that is not me, please fork it and change `ory` and `Ory` everywhere to your own username.
 Also, be sure to change to gitconfig to your own git config, but leave the `credential` section in place.
 **NEVER** Commit back sesitive information within any file such as `.ssh` or the `access-token` in `.kube/config`.
 
@@ -12,7 +12,7 @@ This is because my only use-case for Mac is my company laptop at Hunters so I am
 1. `zsh install-software-mac.sh`
 1. `zsh install.sh`
 1. Set iTerm2 Font: `https://iterm2.com/documentation-fonts.html`. Either choose a Powerline font or enable the built-in powerline characters.
-1. In iTerm2, import the preset colors from `One Half Dark - Joshua.itermcolors`
+1. In iTerm2, import the preset colors from `One Half Dark - Ory.itermcolors`
 1. Close the terminal and open iTerm2.
 1. Set font in VS Code by adding it to the beginning of the list. For example:
    `"editor.fontFamily": "Hack Nerd Font Mono, DejaVu Sans Mono for Powerline, Menlo, Monaco, 'Courier New', monospace"`
